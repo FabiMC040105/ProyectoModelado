@@ -1,0 +1,15 @@
+{
+    "Materiales": [
+        {
+            "id": "M-VDGVW4JPU2P2",
+            "nombre": "carton",
+            "unidad": "Kilogramo",
+            "valor": 77.0,
+            "estado": "Activo",
+            "fecha_creacion": "2024-05-16 01:40:53",
+            "descripcion": "cafe"
+        }
+    ],
+    "Sedes": [],
+    "Centro de acopio": []
+}
