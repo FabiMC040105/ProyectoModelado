@@ -1,10 +1,27 @@
+"""
+Este módulo contiene la clase MaterialReciclajeApp, que gestiona la interfaz gráfica y las operaciones de creación de materiales de reciclaje.
+
+Clase disponible:
+- MaterialReciclajeApp: Clase que gestiona la interfaz gráfica y las operaciones de creación de materiales de reciclaje.
+"""
+
 import tkinter as tk
 from tkinter import ttk, messagebox
 from src.code.funciones import generar_id_unico, agregar_material_archivo, obtener_materiales
 import os
 
 class MaterialReciclajeApp:
+    """
+    Clase para la aplicación de gestión de materiales de reciclaje.
+    """
+
     def __init__(self, root):
+        """
+        Inicializa la aplicación.
+
+        Parámetros:
+        - root: El objeto raíz de la interfaz gráfica.
+        """
         self.root = root
         self.prefijo = "M-"
         # Variables para almacenar los datos del nuevo material
@@ -44,8 +61,11 @@ class MaterialReciclajeApp:
         self.crear_tabla()
 
     def crear_tabla(self):
+        """
+        Crea la tabla de materiales.
+        """
         # Crear tabla
-        columnas = ("Nombre", "Unidad", "Estado", "Valor")
+        columnas = ("ID", "Nombre", "Unidad", "Valor", "Estado", "Fecha de Creación", "Descripción")
         self.tabla = ttk.Treeview(self.tabla_frame, columns=columnas, show="headings")
 
         for col in columnas:
@@ -57,6 +77,9 @@ class MaterialReciclajeApp:
         self.cargar_materiales()
 
     def cargar_materiales(self):
+        """
+        Carga los materiales en la tabla.
+        """
         archivo_materiales = os.path.join(os.path.dirname(__file__), "..", "instrucciones.json")
         materiales = obtener_materiales(archivo_materiales)
 
@@ -64,6 +87,9 @@ class MaterialReciclajeApp:
             self.tabla.insert("", "end", values=(material["id"], material["nombre"], material["unidad"], material["valor"], material["estado"], material["fecha_creacion"], material["descripcion"]))
 
     def crear_material(self):
+        """
+        Crea un nuevo material.
+        """
         nombre = self.nombre_var.get()
         unidad = self.unidad_var.get()
         valor = self.valor_var.get()

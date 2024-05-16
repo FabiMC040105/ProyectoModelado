@@ -1,11 +1,29 @@
+"""
+Este módulo contiene la clase CentroAcopioApp, que gestiona la interfaz gráfica y las operaciones de creación de centros de acopio.
+
+Clase disponible:
+- CentroAcopioApp: Clase que gestiona la interfaz gráfica y las operaciones de creación de centros de acopio.
+"""
+
 import json
 import os
 import tkinter as tk
 from tkinter import ttk, messagebox
 from src.code.funciones import agregar_centro_acopio_archivo, obtener_centros_acopio, obtener_sedes
 
+
 class CentroAcopioApp:
+    """
+    Clase para la aplicación de gestión de centros de acopio.
+    """
+
     def __init__(self, root):
+        """
+        Inicializa la aplicación.
+
+        Parámetros:
+        - root: El objeto raíz de la interfaz gráfica.
+        """
         self.root = root
 
         # Variables para almacenar los datos del centro de acopio
@@ -21,7 +39,7 @@ class CentroAcopioApp:
 
         # Etiquetas y campos de entrada
         ttk.Label(form_frame, text="Sede:").grid(row=0, column=0, sticky="w")
-        sedes = obtener_sedes_activas() # Obtener lista de sedes activas desde la función obtener_sedes_activas
+        sedes = obtener_sedes_activas()  # Obtener lista de sedes activas desde la función obtener_sedes_activas
         self.sede_combobox = ttk.Combobox(form_frame, textvariable=self.sede_var, values=sedes)
         self.sede_combobox.grid(row=0, column=1, padx=5, pady=5)
 
@@ -42,7 +60,9 @@ class CentroAcopioApp:
         self.codigo_entry.grid(row=4, column=1, padx=5, pady=5)
 
         # Botón para crear el nuevo centro de acopio
-        ttk.Button(form_frame, text="Crear Centro de Acopio", command=self.crear_centro_acopio).grid(row=5, columnspan=2, padx=5, pady=10)
+        ttk.Button(form_frame, text="Crear Centro de Acopio", command=self.crear_centro_acopio).grid(row=5,
+                                                                                                     columnspan=2,
+                                                                                                     padx=5, pady=10)
 
         # Crear frame para la tabla de centros de acopio
         self.tabla_frame = ttk.Frame(self.root)
@@ -51,6 +71,9 @@ class CentroAcopioApp:
         self.crear_tabla()
 
     def crear_tabla(self):
+        """
+        Crea la tabla de centros de acopio.
+        """
         # Crear tabla
         columnas = ("Sede", "Número Telefónico", "Ubicación", "Estado")
         self.tabla = ttk.Treeview(self.tabla_frame, columns=columnas, show="headings")
@@ -64,12 +87,19 @@ class CentroAcopioApp:
         self.cargar_centros_acopio()
 
     def cargar_centros_acopio(self):
-        centros_acopio = obtener_centros_acopio() # Obtener lista de centros de acopio desde la función obtener_centros_acopio
+        """
+        Carga los centros de acopio en la tabla.
+        """
+        centros_acopio = obtener_centros_acopio()  # Obtener lista de centros de acopio desde la función obtener_centros_acopio
 
         for centro_acopio in centros_acopio:
-            self.tabla.insert("", "end", values=(centro_acopio["sede"], centro_acopio["telefono"], centro_acopio["ubicacion"], centro_acopio["estado"]))
+            self.tabla.insert("", "end", values=(
+            centro_acopio["sede"], centro_acopio["telefono"], centro_acopio["ubicacion"], centro_acopio["estado"]))
 
     def crear_centro_acopio(self):
+        """
+        Crea un nuevo centro de acopio.
+        """
         sede = self.sede_var.get()
         telefono = self.telefono_var.get()
         ubicacion = self.ubicacion_var.get()
@@ -106,45 +136,17 @@ class CentroAcopioApp:
         self.tabla.delete(*self.tabla.get_children())
         self.cargar_centros_acopio()
 
+
 def obtener_sedes_activas():
+    """
+    Obtiene las sedes activas.
+
+    Retorna:
+    - list: Lista de nombres de sedes activas.
+    """
     sedes_activas = []
     sedes = obtener_sedes()
     for sede in sedes:
         if sede["estado"] == "Activo":
             sedes_activas.append(sede["nombre"])
     return sedes_activas
-
-def agregar_centro_acopio_archivo(centro_acopio_id, sede, telefono, ubicacion, estado):
-    nuevo_centro_acopio = {
-        "id": centro_acopio_id,
-        "sede": sede,
-        "telefono": telefono,
-        "ubicacion": ubicacion,
-        "estado": estado
-    }
-
-    archivo_centros_acopio = os.path.join(os.path.dirname(__file__), "..", "instrucciones.json")
-    if os.path.exists(archivo_centros_acopio):
-        with open(archivo_centros_acopio, "r") as file:
-            data = json.load(file)
-    else:
-        data = {
-            "Materiales": [],
-            "Sedes": [],
-            "Centro de acopio": []
-        }
-
-    data["Centro de acopio"].append(nuevo_centro_acopio)
-
-    with open(archivo_centros_acopio, "w") as file:
-        json.dump(data, file, indent=4)
-
-def obtener_centros_acopio():
-    archivo_centros_acopio = os.path.join(os.path.dirname(__file__), "..", "instrucciones.json")
-    if os.path.exists(archivo_centros_acopio):
-        with open(archivo_centros_acopio, "r") as file:
-            data = json.load(file)
-            return data.get("Centro de acopio", [])
-    else:
-        return []
-

@@ -1,9 +1,26 @@
+"""
+Este módulo contiene la clase SedeApp, que gestiona la interfaz gráfica y las operaciones de creación de sedes.
+
+Clase disponible:
+- SedeApp: Clase que gestiona la interfaz gráfica y las operaciones de creación de sedes.
+"""
+
 import tkinter as tk
-from tkinter import ttk , messagebox
+from tkinter import ttk, messagebox
 from src.code.funciones import generar_id_unico, agregar_sede_archivo, obtener_sedes
 
 class SedeApp:
+    """
+    Clase para la aplicación de gestión de sedes.
+    """
+
     def __init__(self, root):
+        """
+        Inicializa la aplicación.
+
+        Parámetros:
+        - root: El objeto raíz de la interfaz gráfica.
+        """
         self.root = root
         self.prefijo = "S-"
         # Variables para almacenar los datos de la nueva sede
@@ -43,6 +60,9 @@ class SedeApp:
         self.crear_tabla()
 
     def crear_tabla(self):
+        """
+        Crea la tabla de sedes.
+        """
         # Crear tabla
         columnas = ("Nombre", "Ubicación", "Estado", "Teléfono")
         self.tabla = ttk.Treeview(self.tabla_frame, columns=columnas, show="headings")
@@ -56,12 +76,18 @@ class SedeApp:
         self.cargar_sedes()
 
     def cargar_sedes(self):
+        """
+        Carga las sedes en la tabla.
+        """
         sedes = obtener_sedes()
 
         for sede in sedes:
             self.tabla.insert("", "end", values=(sede["nombre"], sede["ubicacion"], sede["estado"], sede["telefono"]))
 
     def crear_sede(self):
+        """
+        Crea una nueva sede.
+        """
         nombre = self.nombre_var.get()
         ubicacion = self.ubicacion_var.get()
         estado = self.estado_var.get()
