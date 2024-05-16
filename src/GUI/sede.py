@@ -1,13 +1,101 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk , messagebox
+from src.code.funciones import generar_id_unico, agregar_sede_archivo, obtener_sedes
 
 class SedeApp:
     def __init__(self, root):
         self.root = root
+        self.prefijo = "S-"
+        # Variables para almacenar los datos de la nueva sede
+        self.nombre_var = tk.StringVar()
+        self.ubicacion_var = tk.StringVar()
+        self.estado_var = tk.StringVar()
+        self.telefono_var = tk.StringVar()
 
-        # Crear frame
-        frame = ttk.Frame(self.root)
-        frame.grid(row=0, column=0, padx=10, pady=10)
+        # Crear frame para formulario de creación de sede
+        form_frame = ttk.Frame(self.root)
+        form_frame.grid(row=0, column=0, padx=10, pady=10)
 
-        # Etiqueta con el nombre "Crear Sede"
-        ttk.Label(frame, text="Crear Sede").grid(row=0, column=0, sticky="w")
+        # Etiquetas y campos de entrada
+        ttk.Label(form_frame, text="Nombre de la Sede:").grid(row=0, column=0, sticky="w")
+        self.nombre_entry = ttk.Entry(form_frame, textvariable=self.nombre_var)
+        self.nombre_entry.grid(row=0, column=1, padx=5, pady=5)
+
+        ttk.Label(form_frame, text="Ubicación:").grid(row=1, column=0, sticky="w")
+        self.ubicacion_combobox = ttk.Combobox(form_frame, textvariable=self.ubicacion_var, values=["San José", "Alajuela", "Cartago", "Heredia", "Guanacaste", "Puntarenas", "Limón"])
+        self.ubicacion_combobox.grid(row=1, column=1, padx=5, pady=5)
+
+        ttk.Label(form_frame, text="Estado:").grid(row=2, column=0, sticky="w")
+        self.estado_combobox = ttk.Combobox(form_frame, textvariable=self.estado_var, values=["Activo", "Inactivo"])
+        self.estado_combobox.grid(row=2, column=1, padx=5, pady=5)
+
+        ttk.Label(form_frame, text="Número de Teléfono:").grid(row=3, column=0, sticky="w")
+        self.telefono_entry = ttk.Entry(form_frame, textvariable=self.telefono_var)
+        self.telefono_entry.grid(row=3, column=1, padx=5, pady=5)
+
+        # Botón para crear la nueva sede
+        ttk.Button(form_frame, text="Crear Sede", command=self.crear_sede).grid(row=4, columnspan=2, padx=5, pady=10)
+
+        # Crear frame para la tabla de sedes
+        self.tabla_frame = ttk.Frame(self.root)
+        self.tabla_frame.grid(row=1, column=0, padx=10, pady=10)
+
+        self.crear_tabla()
+
+    def crear_tabla(self):
+        # Crear tabla
+        columnas = ("Nombre", "Ubicación", "Estado", "Teléfono")
+        self.tabla = ttk.Treeview(self.tabla_frame, columns=columnas, show="headings")
+
+        for col in columnas:
+            self.tabla.heading(col, text=col)
+            self.tabla.column(col, minwidth=0, width=100)
+
+        self.tabla.pack(fill=tk.BOTH, expand=True)
+
+        self.cargar_sedes()
+
+    def cargar_sedes(self):
+        sedes = obtener_sedes()
+
+        for sede in sedes:
+            self.tabla.insert("", "end", values=(sede["nombre"], sede["ubicacion"], sede["estado"], sede["telefono"]))
+
+    def crear_sede(self):
+        nombre = self.nombre_var.get()
+        ubicacion = self.ubicacion_var.get()
+        estado = self.estado_var.get()
+        telefono = self.telefono_var.get()
+
+        if not nombre or not ubicacion or not estado or not telefono:
+            messagebox.showerror("Error", "Por favor complete todos los campos.")
+            return
+
+        try:
+            telefono = int(telefono)
+        except ValueError:
+            messagebox.showerror("Error", "El número de teléfono debe ser numérico.")
+            return
+
+        if len(str(telefono)) != 8:
+            messagebox.showerror("Error", "El número de teléfono debe tener 8 dígitos.")
+            return
+
+        # Generar ID único para la sede
+        sede_id = generar_id_unico(self.prefijo)
+
+        # Agregar nueva sede al archivo JSON
+        agregar_sede_archivo(sede_id, nombre, ubicacion, estado, telefono)
+
+        # Mostrar mensaje de éxito
+        messagebox.showinfo("Éxito", "Sede creada exitosamente.")
+
+        # Limpiar los campos de entrada
+        self.nombre_var.set("")
+        self.ubicacion_var.set("")
+        self.estado_var.set("")
+        self.telefono_var.set("")
+
+        # Recargar la tabla de sedes
+        self.tabla.delete(*self.tabla.get_children())
+        self.cargar_sedes()

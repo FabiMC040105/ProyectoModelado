@@ -6,7 +6,7 @@ import os
 class MaterialReciclajeApp:
     def __init__(self, root):
         self.root = root
-
+        self.prefijo = "M-"
         # Variables para almacenar los datos del nuevo material
         self.nombre_var = tk.StringVar()
         self.unidad_var = tk.StringVar()
@@ -91,7 +91,7 @@ class MaterialReciclajeApp:
             return
 
         # Generar ID único para el material
-        material_id = generar_id_unico()
+        material_id = generar_id_unico(self.prefijo)
 
         # Agregar nuevo material al archivo JSON
         archivo_materiales = os.path.join(os.path.dirname(__file__), "..", "instrucciones.json")

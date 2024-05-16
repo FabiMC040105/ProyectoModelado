@@ -37,6 +37,29 @@
             "descripcion": "botellas"
         }
     ],
-    "Sedes": [],
-    "Centro de acopio": []
+    "Sedes": [
+        {
+            "id": "S-1SJJD41PERSW",
+            "nombre": "Central",
+            "ubicacion": "San Jos\u00e9",
+            "estado": "Activo",
+            "telefono": 88888888
+        },
+        {
+            "id": "S-8YC6KVRHKADL",
+            "nombre": "Sancarle\u00f1a",
+            "ubicacion": "Alajuela",
+            "estado": "Activo",
+            "telefono": 55555555
+        }
+    ],
+    "Centro de acopio": [
+        {
+            "id": "fsrswe32",
+            "sede": "Sancarle\u00f1a",
+            "telefono": "12345678",
+            "ubicacion": "f1-09",
+            "estado": "Activo"
+        }
+    ]
 }
