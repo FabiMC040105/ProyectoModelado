@@ -8,6 +8,33 @@
             "estado": "Activo",
             "fecha_creacion": "2024-05-16 01:40:53",
             "descripcion": "cafe"
+        },
+        {
+            "id": "M-NJ0KOB9D8VXX",
+            "nombre": "rtfdgdg",
+            "unidad": "Litro",
+            "valor": 44.0,
+            "estado": "Activo",
+            "fecha_creacion": "2024-05-16 02:32:22",
+            "descripcion": "sd"
+        },
+        {
+            "id": "M-I4KP08Y45OBX",
+            "nombre": "tetrapack",
+            "unidad": "Unidad",
+            "valor": 100.0,
+            "estado": "Activo",
+            "fecha_creacion": "2024-05-16 02:39:49",
+            "descripcion": "cajas limpias y sin tapa"
+        },
+        {
+            "id": "M-U0J4SIQR7CPV",
+            "nombre": "Vidrio",
+            "unidad": "Unidad",
+            "valor": 115.0,
+            "estado": "Activo",
+            "fecha_creacion": "2024-05-16 02:42:54",
+            "descripcion": "botellas"
         }
     ],
     "Sedes": [],

@@ -61,3 +61,10 @@ def agregar_material_archivo(archivo, material_id, nombre, unidad, valor, descri
 
     with open(archivo, "w") as file:
         json.dump(data, file, indent=4)
+
+def obtener_materiales(archivo):
+    if os.path.exists(archivo):
+        with open(archivo, "r") as file:
+            data = json.load(file)
+            return data.get("Materiales", [])
+    return []

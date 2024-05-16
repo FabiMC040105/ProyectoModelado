@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-from src.code.funciones import generar_id_unico, agregar_material_archivo
+from src.code.funciones import generar_id_unico, agregar_material_archivo, obtener_materiales
 import os
 
 class MaterialReciclajeApp:
@@ -13,29 +13,55 @@ class MaterialReciclajeApp:
         self.valor_var = tk.StringVar()
         self.descripcion_var = tk.StringVar()
 
-        # Crear frame
-        frame = ttk.Frame(self.root)
-        frame.grid(row=0, column=0, padx=10, pady=10)
+        # Crear frame para formulario de creación de materiales
+        form_frame = ttk.Frame(self.root)
+        form_frame.grid(row=0, column=0, padx=10, pady=10)
 
         # Etiquetas y campos de entrada
-        ttk.Label(frame, text="Nombre del Material:").grid(row=0, column=0, sticky="w")
-        self.nombre_entry = ttk.Entry(frame, textvariable=self.nombre_var)
+        ttk.Label(form_frame, text="Nombre del Material:").grid(row=0, column=0, sticky="w")
+        self.nombre_entry = ttk.Entry(form_frame, textvariable=self.nombre_var)
         self.nombre_entry.grid(row=0, column=1, padx=5, pady=5)
 
-        ttk.Label(frame, text="Unidad:").grid(row=1, column=0, sticky="w")
-        self.unidad_combobox = ttk.Combobox(frame, textvariable=self.unidad_var, values=["Kilogramo", "Litro", "Unidad"])
+        ttk.Label(form_frame, text="Unidad:").grid(row=1, column=0, sticky="w")
+        self.unidad_combobox = ttk.Combobox(form_frame, textvariable=self.unidad_var, values=["Kilogramo", "Litro", "Unidad"])
         self.unidad_combobox.grid(row=1, column=1, padx=5, pady=5)
 
-        ttk.Label(frame, text="Valor Unitario (Tec-Colones):").grid(row=2, column=0, sticky="w")
-        self.valor_entry = ttk.Entry(frame, textvariable=self.valor_var)
+        ttk.Label(form_frame, text="Valor Unitario (Tec-Colones):").grid(row=2, column=0, sticky="w")
+        self.valor_entry = ttk.Entry(form_frame, textvariable=self.valor_var)
         self.valor_entry.grid(row=2, column=1, padx=5, pady=5)
 
-        ttk.Label(frame, text="Descripción:").grid(row=3, column=0, sticky="w")
-        self.descripcion_entry = ttk.Entry(frame, textvariable=self.descripcion_var)
+        ttk.Label(form_frame, text="Descripción:").grid(row=3, column=0, sticky="w")
+        self.descripcion_entry = ttk.Entry(form_frame, textvariable=self.descripcion_var)
         self.descripcion_entry.grid(row=3, column=1, padx=5, pady=5)
 
         # Botón para crear el nuevo material
-        ttk.Button(frame, text="Crear Material", command=self.crear_material).grid(row=4, columnspan=2, padx=5, pady=10)
+        ttk.Button(form_frame, text="Crear Material", command=self.crear_material).grid(row=4, columnspan=2, padx=5, pady=10)
+
+        # Crear frame para la tabla de materiales
+        self.tabla_frame = ttk.Frame(self.root)
+        self.tabla_frame.grid(row=1, column=0, padx=10, pady=10)
+
+        self.crear_tabla()
+
+    def crear_tabla(self):
+        # Crear tabla
+        columnas = ("Nombre", "Unidad", "Estado", "Valor")
+        self.tabla = ttk.Treeview(self.tabla_frame, columns=columnas, show="headings")
+
+        for col in columnas:
+            self.tabla.heading(col, text=col)
+            self.tabla.column(col, minwidth=0, width=100)
+
+        self.tabla.pack(fill=tk.BOTH, expand=True)
+
+        self.cargar_materiales()
+
+    def cargar_materiales(self):
+        archivo_materiales = os.path.join(os.path.dirname(__file__), "..", "instrucciones.json")
+        materiales = obtener_materiales(archivo_materiales)
+
+        for material in materiales:
+            self.tabla.insert("", "end", values=(material["id"], material["nombre"], material["unidad"], material["valor"], material["estado"], material["fecha_creacion"], material["descripcion"]))
 
     def crear_material(self):
         nombre = self.nombre_var.get()
@@ -49,13 +75,11 @@ class MaterialReciclajeApp:
 
         try:
             valor = float(valor)
-
         except ValueError:
             messagebox.showerror("Error", "El valor unitario debe ser numérico.")
-            return
 
-        if valor < 1 or valor > 1000:
-            messagebox.showerror("Error", "El valor unitario debe ser mayor a 0 y menor a 1000.")
+        if valor < 1 or valor > 100_000:
+            messagebox.showerror("Error", "El valor debe encontrarse en el rango de 1 a 100 000.")
             return
 
         if len(nombre) < 5 or len(nombre) > 30:
@@ -81,3 +105,7 @@ class MaterialReciclajeApp:
         self.unidad_var.set("")
         self.valor_var.set("")
         self.descripcion_var.set("")
+
+        # Recargar la tabla de materiales
+        self.tabla.delete(*self.tabla.get_children())
+        self.cargar_materiales()
