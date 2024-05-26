@@ -1,8 +1,8 @@
 """
-Este módulo contiene la clase AppPrincipal, que representa la interfaz principal de la aplicación de gestión de reciclaje.
+Este módulo contiene la clase AppPrincipalAdmin, que representa la interfaz principal de la aplicación de gestión de reciclaje.
 
 Clase disponible:
-- AppPrincipal: Clase que representa la interfaz principal de la aplicación de gestión de reciclaje.
+- AppPrincipalAdmin: Clase que representa la interfaz principal de la aplicación de gestión de reciclaje.
 """
 
 import tkinter as tk
@@ -11,7 +11,7 @@ from src.GUI.material import MaterialReciclajeApp
 from src.GUI.sede import SedeApp
 from src.GUI.centro_acopio import CentroAcopioApp
 
-class AppPrincipal:
+class AppPrincipalAdmin:
     """
     Clase para la interfaz principal de la aplicación de gestión de reciclaje.
     """

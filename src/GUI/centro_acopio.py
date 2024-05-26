@@ -9,7 +9,9 @@ import json
 import os
 import tkinter as tk
 from tkinter import ttk, messagebox
-from src.code.funciones import agregar_centro_acopio_archivo, obtener_centros_acopio, obtener_sedes
+
+from src.code.centro_acopio import obtener_centros_acopio, agregar_centro_acopio_archivo
+from src.code.sede_code import obtener_sedes_activas
 
 
 class CentroAcopioApp:
@@ -106,14 +108,7 @@ class CentroAcopioApp:
         estado = self.estado_var.get()
         codigo = self.codigo_var.get()
 
-        # Validar que todos los campos estén completos
-        if not sede or not telefono or not ubicacion or not estado or not codigo:
-            messagebox.showerror("Error", "Por favor complete todos los campos.")
-            return
-
-        # Validar el formato del número de teléfono
-        if not telefono.isdigit() or len(telefono) != 8:
-            messagebox.showerror("Error", "El número de teléfono debe ser un valor numérico de 8 dígitos.")
+        if not self.validarcampos(ubicacion, estado, telefono, codigo):
             return
 
         # Generar ID único para el centro de acopio
@@ -135,18 +130,22 @@ class CentroAcopioApp:
         # Recargar la tabla de centros de acopio
         self.tabla.delete(*self.tabla.get_children())
         self.cargar_centros_acopio()
+    def validarcampos(self, ubicacion, estado, telefono, codigo):
+        centrosdeacopio = obtener_centros_acopio()
+        idvalida = True
+        for centro in centrosdeacopio:
+            if centro["id"] == codigo:
+                idvalida = False
+        if not idvalida:
+            messagebox.showerror("Error", "Ya existe un Centro de acopio con ese nombre")
+            return False
+        # Validar que todos los campos estén completos
+        if not telefono or not ubicacion or not estado or not codigo:
+            messagebox.showerror("Error", "Por favor complete todos los campos.")
+            return False
 
+        # Validar el formato del número de teléfono
+        if not telefono.isdigit() or len(telefono) != 8:
+            messagebox.showerror("Error", "El número de teléfono debe ser un valor numérico de 8 dígitos.")
+            return False
 
-def obtener_sedes_activas():
-    """
-    Obtiene las sedes activas.
-
-    Retorna:
-    - list: Lista de nombres de sedes activas.
-    """
-    sedes_activas = []
-    sedes = obtener_sedes()
-    for sede in sedes:
-        if sede["estado"] == "Activo":
-            sedes_activas.append(sede["nombre"])
-    return sedes_activas

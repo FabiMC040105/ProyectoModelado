@@ -1,0 +1,33 @@
+{
+    "Materiales": [
+        {
+            "id": "M-C2NUHMYB8GCY",
+            "nombre": "papel ",
+            "unidad": "Kilogramo",
+            "valor": "123",
+            "estado": "Activo",
+            "fecha_creacion": "2024-05-26 14:17:45",
+            "descripcion": "papel limpio"
+        },
+        {
+            "id": "M-IBZWASEPD22L",
+            "nombre": "Lata de atun",
+            "unidad": "Unidad",
+            "valor": "135",
+            "estado": "Activo",
+            "fecha_creacion": "2024-05-26 16:07:47",
+            "descripcion": "Lata de atun lavada y sin etiqueta"
+        },
+        {
+            "id": "M-83L4HH3D9VD3",
+            "nombre": "PApel",
+            "unidad": "Kilogramo",
+            "valor": "122",
+            "estado": "Activo",
+            "fecha_creacion": "2024-05-26 16:09:14",
+            "descripcion": "rdt"
+        }
+    ],
+    "Sedes": [],
+    "Centro de acopio": []
+}

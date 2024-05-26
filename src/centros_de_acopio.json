@@ -1,0 +1,46 @@
+{
+    "Centro de acopio": [
+        {
+            "id": "fsrswe32",
+            "sede": "Sancarle\u00f1a",
+            "telefono": "12345678",
+            "ubicacion": "f1-09",
+            "estado": "Activo"
+        },
+        {
+            "id": "CCA15",
+            "sede": "Sprint 2",
+            "telefono": "22222222",
+            "ubicacion": "Edificio 1",
+            "estado": "Activo"
+        },
+        {
+            "id": "CCA15",
+            "sede": "Central",
+            "telefono": "12341234",
+            "ubicacion": "error",
+            "estado": "Activo"
+        },
+        {
+            "id": "CCA106",
+            "sede": "Central",
+            "telefono": "12341234",
+            "ubicacion": "edificio1, piso 2",
+            "estado": "Activo"
+        },
+        {
+            "id": "vdfb gds",
+            "sede": "\u00d1ema",
+            "telefono": "13131313",
+            "ubicacion": "J7",
+            "estado": "Activo"
+        },
+        {
+            "id": "g3f4131",
+            "sede": "Sancarle\u00f1a",
+            "telefono": "12345678",
+            "ubicacion": "Esquina Norte",
+            "estado": "Inactivo"
+        }
+    ]
+}
