@@ -1,0 +1,65 @@
+{
+    "Materiales": [
+        {
+            "id": "M-VDGVW4JPU2P2",
+            "nombre": "carton",
+            "unidad": "Kilogramo",
+            "valor": 77.0,
+            "estado": "Activo",
+            "fecha_creacion": "2024-05-16 01:40:53",
+            "descripcion": "cafe"
+        },
+        {
+            "id": "M-NJ0KOB9D8VXX",
+            "nombre": "rtfdgdg",
+            "unidad": "Litro",
+            "valor": 44.0,
+            "estado": "Activo",
+            "fecha_creacion": "2024-05-16 02:32:22",
+            "descripcion": "sd"
+        },
+        {
+            "id": "M-I4KP08Y45OBX",
+            "nombre": "tetrapack",
+            "unidad": "Unidad",
+            "valor": 100.0,
+            "estado": "Activo",
+            "fecha_creacion": "2024-05-16 02:39:49",
+            "descripcion": "cajas limpias y sin tapa"
+        },
+        {
+            "id": "M-U0J4SIQR7CPV",
+            "nombre": "Vidrio",
+            "unidad": "Unidad",
+            "valor": 115.0,
+            "estado": "Activo",
+            "fecha_creacion": "2024-05-16 02:42:54",
+            "descripcion": "botellas"
+        }
+    ],
+    "Sedes": [
+        {
+            "id": "S-1SJJD41PERSW",
+            "nombre": "Central",
+            "ubicacion": "San Jos\u00e9",
+            "estado": "Activo",
+            "telefono": 88888888
+        },
+        {
+            "id": "S-8YC6KVRHKADL",
+            "nombre": "Sancarle\u00f1a",
+            "ubicacion": "Alajuela",
+            "estado": "Activo",
+            "telefono": 55555555
+        }
+    ],
+    "Centro de acopio": [
+        {
+            "id": "fsrswe32",
+            "sede": "Sancarle\u00f1a",
+            "telefono": "12345678",
+            "ubicacion": "f1-09",
+            "estado": "Activo"
+        }
+    ]
+}
