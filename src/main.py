@@ -1,10 +1,12 @@
 import tkinter as tk
 from src.GUI.ventanas_admin import AppPrincipalAdmin
+from src.GUI.ventanas_centro_acopio import AppPrincipalCentroAcopio
 
 
 def main():
     root = tk.Tk()
-    app = AppPrincipalAdmin(root)
+    app = AppPrincipalCentroAcopio(root, "F-420")
+    #app = AppPrincipalAdmin(root)
     root.mainloop()
 
 

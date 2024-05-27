@@ -22,7 +22,7 @@ def agregar_sede_archivo(sede_id, nombre, ubicacion, estado, telefono):
         "telefono": telefono
     }
 
-    archivo_sedes = os.path.join(os.path.dirname(__file__), "..", JSON_SEDE)
+    archivo_sedes = os.path.join(os.path.dirname(__file__), "..", "db", JSON_SEDE)
     if os.path.exists(archivo_sedes):
         with open(archivo_sedes, "r") as file:
             data = json.load(file)
@@ -44,7 +44,8 @@ def obtener_sedes():
     Retorna:
     - list: Lista de sedes.
     """
-    archivo_sedes = os.path.join(os.path.dirname(__file__), "..", JSON_SEDE)
+    archivo_sedes = os.path.join(os.path.dirname(__file__), "..", "db", JSON_SEDE)
+
     if os.path.exists(archivo_sedes):
         with open(archivo_sedes, "r") as file:
             data = json.load(file)

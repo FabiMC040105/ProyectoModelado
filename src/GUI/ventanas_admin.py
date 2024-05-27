@@ -11,6 +11,7 @@ from src.GUI.material import MaterialReciclajeApp
 from src.GUI.sede import SedeApp
 from src.GUI.centro_acopio import CentroAcopioApp
 
+
 class AppPrincipalAdmin:
     """
     Clase para la interfaz principal de la aplicación de gestión de reciclaje.
@@ -40,7 +41,8 @@ class AppPrincipalAdmin:
         self.boton_sede = ttk.Button(self.panel_lateral, text="Crear Sede", command=self.cargar_sede)
         self.boton_sede.pack(pady=5)
 
-        self.boton_centro_acopio = ttk.Button(self.panel_lateral, text="Crear Centro de Acopio", command=self.cargar_centro_acopio)
+        self.boton_centro_acopio = ttk.Button(self.panel_lateral, text="Crear Centro de Acopio",
+                                              command=self.cargar_centro_acopio)
         self.boton_centro_acopio.pack(pady=5)
 
         # Crear el área principal donde se cargarán los widgets

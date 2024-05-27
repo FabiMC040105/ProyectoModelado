@@ -23,7 +23,7 @@ def agregar_centro_acopio_archivo(centro_acopio_id, sede, telefono, ubicacion, e
         "estado": estado
     }
 
-    archivo_centros_acopio = os.path.join(os.path.dirname(__file__), "..", JSON_CENTRO_DE_ACOPIO)
+    archivo_centros_acopio = os.path.join(os.path.dirname(__file__), "..", "db",  JSON_CENTRO_DE_ACOPIO)
     if os.path.exists(archivo_centros_acopio):
         with open(archivo_centros_acopio, "r") as file:
             data = json.load(file)
@@ -45,7 +45,7 @@ def obtener_centros_acopio():
     Retorna:
     - list: Lista de centros de acopio.
     """
-    archivo_centros_acopio = os.path.join(os.path.dirname(__file__), "..", JSON_CENTRO_DE_ACOPIO)
+    archivo_centros_acopio = os.path.join(os.path.dirname(__file__), "..", "db", JSON_CENTRO_DE_ACOPIO)
     if os.path.exists(archivo_centros_acopio):
         with open(archivo_centros_acopio, "r") as file:
             data = json.load(file)

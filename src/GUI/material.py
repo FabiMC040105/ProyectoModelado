@@ -8,7 +8,7 @@ Clase disponible:
 import tkinter as tk
 from tkinter import ttk, messagebox
 
-from src.code.constantes import JSON_MATERIAL
+from src.code.constantes import JSON_MATERIAL, PREFIJO_MATERIAL
 import os
 
 from src.code.funciones import generar_id_unico
@@ -28,7 +28,7 @@ class MaterialReciclajeApp:
         - root: El objeto raíz de la interfaz gráfica.
         """
         self.root = root
-        self.prefijo = "M-"
+        self.prefijo = PREFIJO_MATERIAL
         # Variables para almacenar los datos del nuevo material
         self.nombre_var = tk.StringVar()
         self.unidad_var = tk.StringVar()
@@ -98,8 +98,7 @@ class MaterialReciclajeApp:
         material_id = generar_id_unico(self.prefijo)
 
         # Agregar nuevo material al archivo JSON
-        archivo_materiales = os.path.join(os.path.dirname(__file__), "..", JSON_MATERIAL)
-        agregar_material_archivo(archivo_materiales, material_id, nombre, unidad, valor, descripcion)
+        agregar_material_archivo(material_id, nombre, unidad, valor, descripcion)
 
         # Mostrar mensaje de éxito
         messagebox.showinfo("Éxito", "Material creado exitosamente.")
@@ -113,6 +112,7 @@ class MaterialReciclajeApp:
         # Recargar la tabla de materiales
         self.tabla.delete(*self.tabla.get_children())
         cargar_materiales(self)
+
     def validarcampos(self, nombre, unidad, valor, descripcion):
 
         materiales = obtener_materiales()
@@ -143,3 +143,4 @@ class MaterialReciclajeApp:
         if len(descripcion) > 1000:
             messagebox.showerror("Error", "La descripción debe tener como máximo 1000 caracteres.")
             return False
+        return True

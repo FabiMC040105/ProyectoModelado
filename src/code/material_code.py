@@ -5,7 +5,10 @@ import os
 from datetime import datetime
 
 from src.code.constantes import JSON_SEDE, JSON_CENTRO_DE_ACOPIO, JSON_MATERIAL
-def agregar_material_archivo(archivo, material_id, nombre, unidad, valor, descripcion):
+from src.code.funciones import obtener_fecha_actual
+
+
+def agregar_material_archivo(material_id, nombre, unidad, valor, descripcion):
     """
     Agrega un nuevo material al archivo JSON especificado.
 
@@ -26,6 +29,8 @@ def agregar_material_archivo(archivo, material_id, nombre, unidad, valor, descri
         "fecha_creacion": obtener_fecha_actual(),
         "descripcion": descripcion
     }
+
+    archivo = os.path.join(os.path.dirname(__file__), "..", "db", JSON_MATERIAL)
 
     if os.path.exists(archivo):
         with open(archivo, "r") as file:
@@ -51,7 +56,7 @@ def obtener_materiales():
     Retorna:
     - list: Lista de materiales.
     """
-    archivo_materiales = os.path.join(os.path.dirname(__file__), "..", JSON_MATERIAL)
+    archivo_materiales = os.path.join(os.path.dirname(__file__), "..", "db",  JSON_MATERIAL)
     if os.path.exists(archivo_materiales):
         with open(archivo_materiales, "r") as file:
             data = json.load(file)
@@ -59,7 +64,14 @@ def obtener_materiales():
     else:
         return []
 
-    
+def obtener_nombre_materiales():
+    listanombremateriales = []
+    materiales = obtener_materiales()
+    for material in materiales:
+        listanombremateriales.append(material.get("nombre"))
+    return listanombremateriales
+
+
 def cargar_materiales(self):
     """
     Carga los materiales en la tabla.
@@ -70,3 +82,5 @@ def cargar_materiales(self):
         self.tabla.insert("", "end", values=(
         material["id"], material["nombre"], material["unidad"], material["valor"], material["estado"],
         material["fecha_creacion"], material["descripcion"]))
+
+

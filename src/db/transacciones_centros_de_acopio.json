@@ -1,0 +1,44 @@
+{
+    "Transacciones": [
+        {
+            "id_transaccion": "T-7ZRAXXRSF8AM",
+            "carnet": "2021067844",
+            "id_funcionario": "F-1234",
+            "sede": "Pacifico",
+            "fecha_hora": "2024-05-27 10:35:12",
+            "materiales": [
+                {
+                    "nombre": "Lata de atun",
+                    "cantidad": "6",
+                    "valor": "135"
+                },
+                {
+                    "nombre": "papel ",
+                    "cantidad": "0.6",
+                    "valor": "123"
+                },
+                {
+                    "nombre": "Vidrio",
+                    "cantidad": "1.7653",
+                    "valor": "500"
+                }
+            ],
+            "total": 1766.4499999999998
+        },
+        {
+            "id_transaccion": "T-A7P0E4XQ05XF",
+            "carnet": "2022091287",
+            "id_funcionario": "F-1234",
+            "sede": "Pacifico",
+            "fecha_hora": "2024-05-27 10:43:56",
+            "materiales": [
+                {
+                    "nombre": "Lata de atun",
+                    "cantidad": "14",
+                    "valor": "135"
+                }
+            ],
+            "total": 1890.0
+        }
+    ]
+}

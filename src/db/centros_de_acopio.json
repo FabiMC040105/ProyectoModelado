@@ -41,6 +41,13 @@
             "telefono": "12345678",
             "ubicacion": "Esquina Norte",
             "estado": "Inactivo"
+        },
+        {
+            "id": "CA115",
+            "sede": "Pacifico",
+            "telefono": "67676767",
+            "ubicacion": "Playa Bonita",
+            "estado": "Activo"
         }
     ]
 }

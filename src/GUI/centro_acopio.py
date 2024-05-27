@@ -10,7 +10,7 @@ import os
 import tkinter as tk
 from tkinter import ttk, messagebox
 
-from src.code.centro_acopio import obtener_centros_acopio, agregar_centro_acopio_archivo
+from src.code.centro_acopio_code import obtener_centros_acopio, agregar_centro_acopio_archivo
 from src.code.sede_code import obtener_sedes_activas
 
 
@@ -148,4 +148,4 @@ class CentroAcopioApp:
         if not telefono.isdigit() or len(telefono) != 8:
             messagebox.showerror("Error", "El número de teléfono debe ser un valor numérico de 8 dígitos.")
             return False
-
+        return True

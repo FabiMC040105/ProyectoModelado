@@ -26,8 +26,24 @@
             "estado": "Activo",
             "fecha_creacion": "2024-05-26 16:09:14",
             "descripcion": "rdt"
+        },
+        {
+            "id": "M-DG859U1XJXYL",
+            "nombre": "carton",
+            "unidad": "Kilogramo",
+            "valor": "123",
+            "estado": "Activo",
+            "fecha_creacion": "2024-05-27 10:16:53",
+            "descripcion": "No humedo"
+        },
+        {
+            "id": "M-9DH0CR5741I8",
+            "nombre": "Vidrio",
+            "unidad": "Kilogramo",
+            "valor": "500",
+            "estado": "Activo",
+            "fecha_creacion": "2024-05-27 10:23:42",
+            "descripcion": "Limpio"
         }
-    ],
-    "Sedes": [],
-    "Centro de acopio": []
+    ]
 }

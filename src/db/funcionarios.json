@@ -1,0 +1,25 @@
+{
+    "Funcionario": [
+        {
+            "correo": "luisbarquero@gmail.com",
+            "id": "F-1234",
+            "nombre": "Luis Barquero",
+            "telefono": "12345678",
+            "idcentro": "CCA106"
+        },
+        {
+            "correo": "toledo@gmail.com",
+            "id": "F-420",
+            "nombre": "Toledo",
+            "telefono": "87654321",
+            "idcentro": "CCA106"
+        },
+        {
+            "correo": "gonzales@gmail.com",
+            "id": "F-420",
+            "nombre": "Juan Gonzales",
+            "telefono": "87654321",
+            "idcentro": "CA115"
+        }
+    ]
+}

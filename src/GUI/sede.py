@@ -25,7 +25,7 @@ class SedeApp:
         - root: El objeto raíz de la interfaz gráfica.
         """
         self.root = root
-        self.prefijo = "S-"
+        self.prefijo = PREFIJO_SEDE
         # Variables para almacenar los datos de la nueva sede
         self.nombre_var = tk.StringVar()
         self.ubicacion_var = tk.StringVar()
@@ -95,7 +95,7 @@ class SedeApp:
         ubicacion = self.ubicacion_var.get()
         estado = self.estado_var.get()
         telefono = self.telefono_var.get()
-        if not self.validarcampos( nombre, ubicacion, estado, telefono):
+        if not self.validarcampos(nombre, ubicacion, estado, telefono):
             return
         # Generar ID único para la sede
         sede_id = generar_id_unico(PREFIJO_SEDE)
@@ -138,3 +138,4 @@ class SedeApp:
         if len(str(telefono)) != 8:
             messagebox.showerror("Error", "El número de teléfono debe tener 8 dígitos.")
             return False
+        return True
