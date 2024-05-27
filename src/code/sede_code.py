@@ -1,11 +1,24 @@
+"""
+Este módulo proporciona funciones para la gestión de sedes y la manipulación de archivos JSON.
+
+Funciones disponibles:
+- agregar_sede_archivo: Agrega una nueva sede al archivo JSON de sedes.
+- obtener_sedes: Obtiene la lista de sedes del archivo JSON de sedes.
+- obtener_sedes_activas: Obtiene las sedes activas.
+
+Dependencias:
+- json: Para cargar y escribir datos en archivos JSON.
+- os: Para manipular rutas de archivos y verificar la existencia de archivos.
+- src.code.constantes.JSON_SEDE: Ruta del archivo JSON que contiene la información de las sedes.
+"""
 
 import json
 import os
-
 from src.code.constantes import JSON_SEDE
+
 def agregar_sede_archivo(sede_id, nombre, ubicacion, estado, telefono):
     """
-    Agrega una nueva sede al archivo JSON de instrucciones.
+    Agrega una nueva sede al archivo JSON de sedes.
 
     Parámetros:
     - sede_id (str): ID de la sede.
@@ -39,7 +52,7 @@ def agregar_sede_archivo(sede_id, nombre, ubicacion, estado, telefono):
 
 def obtener_sedes():
     """
-    Obtiene la lista de sedes del archivo JSON de instrucciones.
+    Obtiene la lista de sedes del archivo JSON de sedes.
 
     Retorna:
     - list: Lista de sedes.

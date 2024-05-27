@@ -1,5 +1,5 @@
 """
-Este módulo contiene la clase AppPrincipalAdmin, que representa la interfaz principal de la aplicación de gestión de reciclaje.
+Este módulo contiene la clase AppPrincipalAdmin para la interfaz principal de la aplicación de gestión de reciclaje.
 
 Clase disponible:
 - AppPrincipalAdmin: Clase que representa la interfaz principal de la aplicación de gestión de reciclaje.
@@ -21,8 +21,8 @@ class AppPrincipalAdmin:
         """
         Inicializa la aplicación principal.
 
-        Parámetros:
-        - root: El objeto raíz de la interfaz gráfica.
+        :param root: El objeto raíz de la interfaz gráfica.
+        :type root: tk.Tk
         """
         self.root = root
         self.root.title("Gestión de Reciclaje")
@@ -76,4 +76,3 @@ class AppPrincipalAdmin:
         """
         for widget in self.area_principal.winfo_children():
             widget.destroy()
-

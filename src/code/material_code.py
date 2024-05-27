@@ -1,19 +1,29 @@
-import random
-import string
+"""
+Este módulo proporciona funciones para la gestión de materiales y la manipulación de archivos JSON.
+
+Funciones disponibles:
+- agregar_material_archivo: Agrega un nuevo material al archivo JSON especificado.
+- obtener_materiales: Obtiene la lista de materiales del archivo JSON especificado.
+- obtener_nombre_materiales: Obtiene una lista de nombres de materiales.
+- cargar_materiales: Carga los materiales en la tabla.
+
+Dependencias:
+- json: Para cargar y escribir datos en archivos JSON.
+- os: Para manipular rutas de archivos y verificar la existencia de archivos.
+- src.code.constantes.JSON_MATERIAL: Ruta del archivo JSON que contiene la información de los materiales.
+- src.code.funciones.obtener_fecha_actual: Función para obtener la fecha actual.
+"""
+
 import json
 import os
-from datetime import datetime
-
-from src.code.constantes import JSON_SEDE, JSON_CENTRO_DE_ACOPIO, JSON_MATERIAL
+from src.code.constantes import JSON_MATERIAL
 from src.code.funciones import obtener_fecha_actual
-
 
 def agregar_material_archivo(material_id, nombre, unidad, valor, descripcion):
     """
     Agrega un nuevo material al archivo JSON especificado.
 
     Parámetros:
-    - archivo (str): Ruta del archivo JSON.
     - material_id (str): ID del material.
     - nombre (str): Nombre del material.
     - unidad (str): Unidad de medida del material.
@@ -50,9 +60,6 @@ def obtener_materiales():
     """
     Obtiene la lista de materiales del archivo JSON especificado.
 
-    Parámetros:
-    - archivo (str): Ruta del archivo JSON.
-
     Retorna:
     - list: Lista de materiales.
     """
@@ -65,6 +72,12 @@ def obtener_materiales():
         return []
 
 def obtener_nombre_materiales():
+    """
+    Obtiene una lista de nombres de materiales.
+
+    Retorna:
+    - list: Lista de nombres de materiales.
+    """
     listanombremateriales = []
     materiales = obtener_materiales()
     for material in materiales:
@@ -84,3 +97,14 @@ def cargar_materiales(self):
         material["fecha_creacion"], material["descripcion"]))
 
 
+def limpiar_formulario(app):
+    """
+    Limpia los campos del formulario de la aplicación.
+
+    :param app: Objeto de la aplicación.
+    :type app: tkinter.Tk
+    """
+    app.nombre_var.set("")
+    app.unidad_var.set("")
+    app.valor_var.set("")
+    app.descripcion_var.set("")

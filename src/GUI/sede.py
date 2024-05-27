@@ -11,7 +11,6 @@ from src.code.constantes import JSON_SEDE, COLUMNAS_TABLA_SEDE, PREFIJO_SEDE
 from src.code.funciones import generar_id_unico
 from src.code.sede_code import obtener_sedes, agregar_sede_archivo
 
-
 class SedeApp:
     """
     Clase para la aplicación de gestión de sedes.
@@ -81,7 +80,6 @@ class SedeApp:
         """
         Carga las sedes en la tabla.
         """
-
         sedes = obtener_sedes()
 
         for sede in sedes:
@@ -117,6 +115,18 @@ class SedeApp:
         self.cargar_sedes()
 
     def validarcampos(self, nombre, ubicacion, estado, telefono):
+        """
+        Valida los campos del formulario.
+
+        Parámetros:
+        - nombre: El nombre de la sede.
+        - ubicacion: La ubicación de la sede.
+        - estado: El estado de la sede.
+        - telefono: El número de teléfono de la sede.
+
+        Retorna:
+        - bool: True si los campos son válidos, False en caso contrario.
+        """
         sedes = obtener_sedes()
         nombrevalido = True
         for sede in sedes:

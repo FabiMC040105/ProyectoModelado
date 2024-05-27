@@ -62,9 +62,7 @@ class CentroAcopioApp:
         self.codigo_entry.grid(row=4, column=1, padx=5, pady=5)
 
         # Botón para crear el nuevo centro de acopio
-        ttk.Button(form_frame, text="Crear Centro de Acopio", command=self.crear_centro_acopio).grid(row=5,
-                                                                                                     columnspan=2,
-                                                                                                     padx=5, pady=10)
+        ttk.Button(form_frame, text="Crear Centro de Acopio", command=self.crear_centro_acopio).grid(row=5, columnspan=2, padx=5, pady=10)
 
         # Crear frame para la tabla de centros de acopio
         self.tabla_frame = ttk.Frame(self.root)
@@ -95,8 +93,7 @@ class CentroAcopioApp:
         centros_acopio = obtener_centros_acopio()  # Obtener lista de centros de acopio desde la función obtener_centros_acopio
 
         for centro_acopio in centros_acopio:
-            self.tabla.insert("", "end", values=(
-            centro_acopio["sede"], centro_acopio["telefono"], centro_acopio["ubicacion"], centro_acopio["estado"]))
+            self.tabla.insert("", "end", values=(centro_acopio["sede"], centro_acopio["telefono"], centro_acopio["ubicacion"], centro_acopio["estado"]))
 
     def crear_centro_acopio(self):
         """
@@ -130,7 +127,20 @@ class CentroAcopioApp:
         # Recargar la tabla de centros de acopio
         self.tabla.delete(*self.tabla.get_children())
         self.cargar_centros_acopio()
+
     def validarcampos(self, ubicacion, estado, telefono, codigo):
+        """
+        Valida los campos del formulario.
+
+        Parámetros:
+        - ubicacion: La ubicación del centro de acopio.
+        - estado: El estado del centro de acopio.
+        - telefono: El número de teléfono del centro de acopio.
+        - codigo: El código ID del centro de acopio.
+
+        Retorna:
+        - bool: True si los campos son válidos, False en caso contrario.
+        """
         centrosdeacopio = obtener_centros_acopio()
         idvalida = True
         for centro in centrosdeacopio:
@@ -139,6 +149,7 @@ class CentroAcopioApp:
         if not idvalida:
             messagebox.showerror("Error", "Ya existe un Centro de acopio con ese nombre")
             return False
+
         # Validar que todos los campos estén completos
         if not telefono or not ubicacion or not estado or not codigo:
             messagebox.showerror("Error", "Por favor complete todos los campos.")

@@ -7,10 +7,8 @@ Clase disponible:
 
 import tkinter as tk
 from tkinter import ttk, messagebox
-
 from src.code.constantes import JSON_MATERIAL, PREFIJO_MATERIAL
 import os
-
 from src.code.funciones import generar_id_unico
 from src.code.material_code import cargar_materiales, agregar_material_archivo, obtener_materiales
 
@@ -81,7 +79,6 @@ class MaterialReciclajeApp:
 
         cargar_materiales(self)
 
-
     def crear_material(self):
         """
         Crea un nuevo material.
@@ -104,17 +101,25 @@ class MaterialReciclajeApp:
         messagebox.showinfo("Éxito", "Material creado exitosamente.")
 
         # Limpiar los campos de entrada
-        self.nombre_var.set("")
-        self.unidad_var.set("")
-        self.valor_var.set("")
-        self.descripcion_var.set("")
+        limpiar_campos(self)
 
         # Recargar la tabla de materiales
         self.tabla.delete(*self.tabla.get_children())
         cargar_materiales(self)
 
     def validarcampos(self, nombre, unidad, valor, descripcion):
+        """
+        Valida los campos del formulario.
 
+        Parámetros:
+        - nombre: El nombre del material.
+        - unidad: La unidad de medida del material.
+        - valor: El valor unitario del material.
+        - descripcion: La descripción del material.
+
+        Retorna:
+        - bool: True si los campos son válidos, False en caso contrario.
+        """
         materiales = obtener_materiales()
         nombrevalido = True
         for material in materiales:
@@ -131,6 +136,7 @@ class MaterialReciclajeApp:
             valor = float(valor)
         except ValueError:
             messagebox.showerror("Error", "El valor unitario debe ser numérico.")
+            return False
 
         if valor < 1 or valor > 100_000:
             messagebox.showerror("Error", "El valor debe encontrarse en el rango de 1 a 100 000.")
