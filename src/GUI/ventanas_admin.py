@@ -76,3 +76,4 @@ class AppPrincipalAdmin:
         """
         for widget in self.area_principal.winfo_children():
             widget.destroy()
+
