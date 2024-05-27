@@ -1,8 +1,8 @@
 """
-Este módulo contiene la clase AppPrincipal, que representa la interfaz principal de la aplicación de gestión de reciclaje.
+Este módulo contiene la clase AppPrincipalAdmin para la interfaz principal de la aplicación de gestión de reciclaje.
 
 Clase disponible:
-- AppPrincipal: Clase que representa la interfaz principal de la aplicación de gestión de reciclaje.
+- AppPrincipalAdmin: Clase que representa la interfaz principal de la aplicación de gestión de reciclaje.
 """
 
 import tkinter as tk
@@ -11,7 +11,8 @@ from src.GUI.material import MaterialReciclajeApp
 from src.GUI.sede import SedeApp
 from src.GUI.centro_acopio import CentroAcopioApp
 
-class AppPrincipal:
+
+class AppPrincipalAdmin:
     """
     Clase para la interfaz principal de la aplicación de gestión de reciclaje.
     """
@@ -20,8 +21,8 @@ class AppPrincipal:
         """
         Inicializa la aplicación principal.
 
-        Parámetros:
-        - root: El objeto raíz de la interfaz gráfica.
+        :param root: El objeto raíz de la interfaz gráfica.
+        :type root: tk.Tk
         """
         self.root = root
         self.root.title("Gestión de Reciclaje")
@@ -40,7 +41,8 @@ class AppPrincipal:
         self.boton_sede = ttk.Button(self.panel_lateral, text="Crear Sede", command=self.cargar_sede)
         self.boton_sede.pack(pady=5)
 
-        self.boton_centro_acopio = ttk.Button(self.panel_lateral, text="Crear Centro de Acopio", command=self.cargar_centro_acopio)
+        self.boton_centro_acopio = ttk.Button(self.panel_lateral, text="Crear Centro de Acopio",
+                                              command=self.cargar_centro_acopio)
         self.boton_centro_acopio.pack(pady=5)
 
         # Crear el área principal donde se cargarán los widgets

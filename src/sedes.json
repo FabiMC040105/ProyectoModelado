@@ -1,0 +1,11 @@
+{
+    "Sedes": [
+        {
+            "id": "S-INL1LNR5BU3T",
+            "nombre": "Pacifico",
+            "ubicacion": "Puntarenas",
+            "estado": "Activo",
+            "telefono": "89898989"
+        }
+    ]
+}

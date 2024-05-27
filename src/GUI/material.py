@@ -7,8 +7,11 @@ Clase disponible:
 
 import tkinter as tk
 from tkinter import ttk, messagebox
-from src.code.funciones import generar_id_unico, agregar_material_archivo, obtener_materiales
+from src.code.constantes import JSON_MATERIAL, PREFIJO_MATERIAL
 import os
+from src.code.funciones import generar_id_unico
+from src.code.material_code import cargar_materiales, agregar_material_archivo, obtener_materiales
+
 
 class MaterialReciclajeApp:
     """
@@ -23,7 +26,7 @@ class MaterialReciclajeApp:
         - root: El objeto raíz de la interfaz gráfica.
         """
         self.root = root
-        self.prefijo = "M-"
+        self.prefijo = PREFIJO_MATERIAL
         # Variables para almacenar los datos del nuevo material
         self.nombre_var = tk.StringVar()
         self.unidad_var = tk.StringVar()
@@ -74,17 +77,7 @@ class MaterialReciclajeApp:
 
         self.tabla.pack(fill=tk.BOTH, expand=True)
 
-        self.cargar_materiales()
-
-    def cargar_materiales(self):
-        """
-        Carga los materiales en la tabla.
-        """
-        archivo_materiales = os.path.join(os.path.dirname(__file__), "..", "instrucciones.json")
-        materiales = obtener_materiales(archivo_materiales)
-
-        for material in materiales:
-            self.tabla.insert("", "end", values=(material["id"], material["nombre"], material["unidad"], material["valor"], material["estado"], material["fecha_creacion"], material["descripcion"]))
+        cargar_materiales(self)
 
     def crear_material(self):
         """
@@ -95,43 +88,65 @@ class MaterialReciclajeApp:
         valor = self.valor_var.get()
         descripcion = self.descripcion_var.get()
 
-        if not nombre or not unidad or not valor:
-            messagebox.showerror("Error", "Por favor complete todos los campos.")
-            return
-
-        try:
-            valor = float(valor)
-        except ValueError:
-            messagebox.showerror("Error", "El valor unitario debe ser numérico.")
-
-        if valor < 1 or valor > 100_000:
-            messagebox.showerror("Error", "El valor debe encontrarse en el rango de 1 a 100 000.")
-            return
-
-        if len(nombre) < 5 or len(nombre) > 30:
-            messagebox.showerror("Error", "El nombre del material debe tener entre 5 y 30 caracteres.")
-            return
-
-        if len(descripcion) > 1000:
-            messagebox.showerror("Error", "La descripción debe tener como máximo 1000 caracteres.")
+        if not self.validarcampos(nombre, unidad, valor, descripcion):
             return
 
         # Generar ID único para el material
         material_id = generar_id_unico(self.prefijo)
 
         # Agregar nuevo material al archivo JSON
-        archivo_materiales = os.path.join(os.path.dirname(__file__), "..", "instrucciones.json")
-        agregar_material_archivo(archivo_materiales, material_id, nombre, unidad, valor, descripcion)
+        agregar_material_archivo(material_id, nombre, unidad, valor, descripcion)
 
         # Mostrar mensaje de éxito
         messagebox.showinfo("Éxito", "Material creado exitosamente.")
 
         # Limpiar los campos de entrada
-        self.nombre_var.set("")
-        self.unidad_var.set("")
-        self.valor_var.set("")
-        self.descripcion_var.set("")
+        limpiar_campos(self)
 
         # Recargar la tabla de materiales
         self.tabla.delete(*self.tabla.get_children())
-        self.cargar_materiales()
+        cargar_materiales(self)
+
+    def validarcampos(self, nombre, unidad, valor, descripcion):
+        """
+        Valida los campos del formulario.
+
+        Parámetros:
+        - nombre: El nombre del material.
+        - unidad: La unidad de medida del material.
+        - valor: El valor unitario del material.
+        - descripcion: La descripción del material.
+
+        Retorna:
+        - bool: True si los campos son válidos, False en caso contrario.
+        """
+        materiales = obtener_materiales()
+        nombrevalido = True
+        for material in materiales:
+            if material["nombre"].upper() == nombre.upper():
+                nombrevalido = False
+        if not nombrevalido:
+            messagebox.showerror("Error", "Ya existe un material con ese nombre")
+            return False
+
+        if not nombre or not unidad or not valor:
+            messagebox.showerror("Error", "Por favor complete todos los campos.")
+            return False
+        try:
+            valor = float(valor)
+        except ValueError:
+            messagebox.showerror("Error", "El valor unitario debe ser numérico.")
+            return False
+
+        if valor < 1 or valor > 100_000:
+            messagebox.showerror("Error", "El valor debe encontrarse en el rango de 1 a 100 000.")
+            return False
+
+        if len(nombre) < 5 or len(nombre) > 30:
+            messagebox.showerror("Error", "El nombre del material debe tener entre 5 y 30 caracteres.")
+            return False
+
+        if len(descripcion) > 1000:
+            messagebox.showerror("Error", "La descripción debe tener como máximo 1000 caracteres.")
+            return False
+        return True

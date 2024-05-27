@@ -7,7 +7,9 @@ Clase disponible:
 
 import tkinter as tk
 from tkinter import ttk, messagebox
-from src.code.funciones import generar_id_unico, agregar_sede_archivo, obtener_sedes
+from src.code.constantes import JSON_SEDE, COLUMNAS_TABLA_SEDE, PREFIJO_SEDE
+from src.code.funciones import generar_id_unico
+from src.code.sede_code import obtener_sedes, agregar_sede_archivo
 
 class SedeApp:
     """
@@ -22,7 +24,7 @@ class SedeApp:
         - root: El objeto raíz de la interfaz gráfica.
         """
         self.root = root
-        self.prefijo = "S-"
+        self.prefijo = PREFIJO_SEDE
         # Variables para almacenar los datos de la nueva sede
         self.nombre_var = tk.StringVar()
         self.ubicacion_var = tk.StringVar()
@@ -64,10 +66,9 @@ class SedeApp:
         Crea la tabla de sedes.
         """
         # Crear tabla
-        columnas = ("Nombre", "Ubicación", "Estado", "Teléfono")
-        self.tabla = ttk.Treeview(self.tabla_frame, columns=columnas, show="headings")
+        self.tabla = ttk.Treeview(self.tabla_frame, columns=COLUMNAS_TABLA_SEDE, show="headings")
 
-        for col in columnas:
+        for col in COLUMNAS_TABLA_SEDE:
             self.tabla.heading(col, text=col)
             self.tabla.column(col, minwidth=0, width=100)
 
@@ -92,23 +93,10 @@ class SedeApp:
         ubicacion = self.ubicacion_var.get()
         estado = self.estado_var.get()
         telefono = self.telefono_var.get()
-
-        if not nombre or not ubicacion or not estado or not telefono:
-            messagebox.showerror("Error", "Por favor complete todos los campos.")
+        if not self.validarcampos(nombre, ubicacion, estado, telefono):
             return
-
-        try:
-            telefono = int(telefono)
-        except ValueError:
-            messagebox.showerror("Error", "El número de teléfono debe ser numérico.")
-            return
-
-        if len(str(telefono)) != 8:
-            messagebox.showerror("Error", "El número de teléfono debe tener 8 dígitos.")
-            return
-
         # Generar ID único para la sede
-        sede_id = generar_id_unico(self.prefijo)
+        sede_id = generar_id_unico(PREFIJO_SEDE)
 
         # Agregar nueva sede al archivo JSON
         agregar_sede_archivo(sede_id, nombre, ubicacion, estado, telefono)
@@ -125,3 +113,39 @@ class SedeApp:
         # Recargar la tabla de sedes
         self.tabla.delete(*self.tabla.get_children())
         self.cargar_sedes()
+
+    def validarcampos(self, nombre, ubicacion, estado, telefono):
+        """
+        Valida los campos del formulario.
+
+        Parámetros:
+        - nombre: El nombre de la sede.
+        - ubicacion: La ubicación de la sede.
+        - estado: El estado de la sede.
+        - telefono: El número de teléfono de la sede.
+
+        Retorna:
+        - bool: True si los campos son válidos, False en caso contrario.
+        """
+        sedes = obtener_sedes()
+        nombrevalido = True
+        for sede in sedes:
+            if sede["nombre"].upper() == nombre.upper():
+                nombrevalido = False
+        if not nombrevalido:
+            messagebox.showerror("Error", "Ya existe un sede con ese nombre")
+            return False
+        if not nombre or not ubicacion or not estado or not telefono:
+            messagebox.showerror("Error", "Por favor complete todos los campos.")
+            return False
+
+        try:
+            telefono = int(telefono)
+        except ValueError:
+            messagebox.showerror("Error", "El número de teléfono debe ser numérico.")
+            return False
+
+        if len(str(telefono)) != 8:
+            messagebox.showerror("Error", "El número de teléfono debe tener 8 dígitos.")
+            return False
+        return True

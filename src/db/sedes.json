@@ -1,0 +1,53 @@
+{
+    "Sedes": [
+        {
+            "id": "S-PKB2EKKG17S4",
+            "nombre": "\u00d1ema",
+            "ubicacion": "Lim\u00f3n",
+            "estado": "Activo",
+            "telefono": "98765432"
+        },
+        {
+            "id": "S-1SJJD41PERSW",
+            "nombre": "Central",
+            "ubicacion": "San Jos\u00e9",
+            "estado": "Activo",
+            "telefono": 88888888
+        },
+        {
+            "id": "S-8YC6KVRHKADL",
+            "nombre": "Sancarle\u00f1a",
+            "ubicacion": "Alajuela",
+            "estado": "Activo",
+            "telefono": 55555555
+        },
+        {
+            "id": "S-5YBWB0W3UA9J",
+            "nombre": "Sprint 2",
+            "ubicacion": "Guanacaste",
+            "estado": "Activo",
+            "telefono": 11111111
+        },
+        {
+            "id": "S-YRVXAJLCU2Y2",
+            "nombre": "Sede Central",
+            "ubicacion": "Cartago",
+            "estado": "Inactivo",
+            "telefono": 12345678
+        },
+        {
+            "id": "S-7UD8EK2WIWCZ",
+            "nombre": "Central",
+            "ubicacion": "Alajuela",
+            "estado": "Inactivo",
+            "telefono": "12345678"
+        },
+        {
+            "id": "S-8C1BIGX8UMXL",
+            "nombre": "Pacifico",
+            "ubicacion": "Puntarenas",
+            "estado": "Activo",
+            "telefono": "89898989"
+        }
+    ]
+}
