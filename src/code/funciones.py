@@ -6,12 +6,14 @@ Funciones disponibles:
 - obtener_provincias(): Retorna una lista de provincias de Costa Rica.
 - obtener_fecha_actual(): Retorna la fecha y hora actual en formato Y-m-d H:M:S
 """
-
+import json
+import os
 import random
 import string
 
 from datetime import datetime
 
+from src.code.constantes import JSON_FUNCIONARIOS
 
 
 def generar_id_unico(prefix):
@@ -41,9 +43,23 @@ def obtener_fecha_actual():
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
+def obtener_funcionarios(id_funcionario):
+    """
+    Obtiene la lista de sedes del archivo JSON de instrucciones.
 
+    Retorna:
+    - list: Lista de sedes.
+    """
+    archivo_sedes = os.path.join(os.path.dirname(__file__), "..", "db", JSON_FUNCIONARIOS)
 
-
-
-
-
+    if os.path.exists(archivo_sedes):
+        with open(archivo_sedes, "r") as file:
+            data = json.load(file)
+            funcionarios = data.get("Funcionarios", [])
+            for funcionario in funcionarios:
+                if id_funcionario == funcionario["id"]:
+                    return funcionario
+    else:
+        return False
+def verificar_carnet_estudiante(carnet):
+    return True

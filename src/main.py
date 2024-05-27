@@ -5,7 +5,7 @@ from src.GUI.ventanas_centro_acopio import AppPrincipalCentroAcopio
 
 def main():
     root = tk.Tk()
-    app = AppPrincipalCentroAcopio(root, "F-420")
+    app = AppPrincipalCentroAcopio(root, "F-4444")
     #app = AppPrincipalAdmin(root)
     root.mainloop()
 

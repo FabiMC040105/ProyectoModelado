@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from src.code.constantes import COLUMNAS_TABLA_TRANSACCIONES_CENTRO_ACOPIO
+from src.code.funciones import obtener_funcionarios
 from src.code.ver_transacciones_code import cargar_transacciones
 
 class VerTransaccionesCentroAcopio:

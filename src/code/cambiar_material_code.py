@@ -4,7 +4,7 @@ from datetime import datetime
 from tkinter import messagebox
 
 from src.code.constantes import JSON_TRANSACCIONES_CENTRO_DE_ACOPIO, PREFIJO_TRANSACCION
-from src.code.funciones import generar_id_unico
+from src.code.funciones import generar_id_unico, obtener_funcionarios
 from src.code.material_code import obtener_materiales
 
 
@@ -55,11 +55,12 @@ def registrar_transaccion(carnet, id_funcionario, sede, materiales, total):
                 data = json.load(file)
         else:
             data = {"Transacciones": []}
-
+        funcionario = obtener_funcionarios(id_funcionario)
         transaccion = {
             "id_transaccion": generar_id_unico(PREFIJO_TRANSACCION),
             "carnet": carnet,
             "id_funcionario": id_funcionario,
+            "id_centro_de_acopio": funcionario["idcentro"],
             "sede": sede,
             "fecha_hora": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "materiales": materiales,

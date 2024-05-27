@@ -4,6 +4,7 @@ from src.code.cambiar_material_code import *
 
 from src.code.cambiar_material_code import validar_cantidad_material, obtener_detalles_material, calcular_monto, \
     limpiar_formulario, registrar_transaccion
+from src.code.funciones import verificar_carnet_estudiante
 from src.code.sede_code import obtener_sedes_activas
 
 
@@ -77,6 +78,8 @@ class CambiarMaterialApp:
 
     def realizar_cambio(self):
         carnet = self.carnet_var.get()
+        if not verificar_carnet_estudiante(carnet):
+            return
         sede = self.sede_var.get()
         materiales = []
         total = 0

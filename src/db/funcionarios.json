@@ -1,5 +1,5 @@
 {
-    "Funcionario": [
+    "Funcionarios": [
         {
             "correo": "luisbarquero@gmail.com",
             "id": "F-1234",
@@ -16,7 +16,7 @@
         },
         {
             "correo": "gonzales@gmail.com",
-            "id": "F-420",
+            "id": "F-4444",
             "nombre": "Juan Gonzales",
             "telefono": "87654321",
             "idcentro": "CA115"
