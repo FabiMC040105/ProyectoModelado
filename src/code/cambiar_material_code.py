@@ -30,8 +30,10 @@ import os
 from datetime import datetime
 from tkinter import messagebox
 from src.code.constantes import JSON_TRANSACCIONES_CENTRO_DE_ACOPIO, PREFIJO_TRANSACCION
-from src.code.funciones import generar_id_unico, obtener_funcionarios
+from src.code.funciones import generar_id_unico, obtener_funcionarios, verificar_carnet_estudiante
 from src.code.material_code import obtener_materiales
+from src.code.sede_code import validar_nombre_sede
+
 
 def obtener_nombre_materiales():
     """
@@ -42,6 +44,7 @@ def obtener_nombre_materiales():
     """
     materiales = obtener_materiales()
     return [material['nombre'] for material in materiales]
+
 
 def obtener_detalles_material(nombre):
     """
@@ -57,6 +60,7 @@ def obtener_detalles_material(nombre):
         if material['nombre'] == nombre:
             return material
     return {}
+
 
 def validar_cantidad_material(cantidad, nombre_material):
     """
@@ -82,6 +86,33 @@ def validar_cantidad_material(cantidad, nombre_material):
         return False
     return True
 
+
+def validar_nombre_material(nombre_material):
+    materiales = obtener_nombre_materiales()
+
+    for material in materiales:
+        if material == nombre_material:
+            return True
+    messagebox.showerror("Error de material", "Nombre de material incorrecto")
+    return False
+
+
+def validar_campos_material(nombre_material, cantidad):
+    if (not validar_nombre_material(nombre_material)
+            or not validar_cantidad_material(cantidad, nombre_material)):
+        return False
+    else:
+        return True
+def validar_campos_transacción(materiales, sede, carnet):
+    if len(materiales) < 1:
+        messagebox.showerror("Érror", "Debe agregar materiales a la transacción.")
+        return False
+    if not validar_nombre_sede(sede):
+        return False
+    if not verificar_carnet_estudiante(carnet):
+        return False
+    return True
+
 def calcular_monto(valor, cantidad):
     """
     Calcula el monto total de una transacción.
@@ -94,6 +125,7 @@ def calcular_monto(valor, cantidad):
     :rtype: float
     """
     return round(float(valor) * float(cantidad), 2)
+
 
 def limpiar_formulario(app):
     """
@@ -108,6 +140,7 @@ def limpiar_formulario(app):
     app.detalle_var.set("")
     app.cantidad_var.set("")
 
+
 def limpiar_material_formulario(app):
     """
     Limpia los campos relacionados con el material en el formulario.
@@ -118,6 +151,7 @@ def limpiar_material_formulario(app):
     app.material_var.set("")
     app.detalle_var.set("")
     app.cantidad_var.set("")
+
 
 def registrar_transaccion(carnet, id_funcionario, sede, materiales, total):
     """

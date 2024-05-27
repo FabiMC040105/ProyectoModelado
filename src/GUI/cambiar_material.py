@@ -102,7 +102,7 @@ class CambiarMaterialApp:
         """
         nombre = self.material_var.get()
         cantidad = self.cantidad_var.get()
-        if not validar_cantidad_material(cantidad, nombre):
+        if not validar_campos_material(nombre, cantidad):
             return
         material_info = obtener_detalles_material(nombre)
         monto = calcular_monto(material_info['valor'], cantidad)
@@ -114,8 +114,6 @@ class CambiarMaterialApp:
         Realiza la transacción de cambio de material.
         """
         carnet = self.carnet_var.get()
-        if not verificar_carnet_estudiante(carnet):
-            return
         sede = self.sede_var.get()
         materiales = []
         total = 0
@@ -127,7 +125,8 @@ class CambiarMaterialApp:
                 "valor": values[1]
             })
             total += float(values[4])
-
+        if not validar_campos_transacción(materiales, sede, carnet):
+            return
         if registrar_transaccion(carnet, self.id_funcionario, sede, materiales, total):
             messagebox.showinfo("Éxito", "Transacción realizada exitosamente.")
             self.tabla.delete(*self.tabla.get_children())
