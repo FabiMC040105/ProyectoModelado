@@ -1,0 +1,73 @@
+{
+    "Transacciones": [
+        {
+            "id_transaccion": "T-GC1C3C9S7ZZ8",
+            "carnet": "1234567890",
+            "id_funcionario": "F-1234",
+            "id_centro_de_acopio": "CCA106",
+            "sede": "Pacifico",
+            "fecha_hora": "2024-05-27 11:52:25",
+            "materiales": [
+                {
+                    "nombre": "carton",
+                    "cantidad": "11",
+                    "valor": "123"
+                }
+            ],
+            "total": 1353.0
+        },
+        {
+            "id_transaccion": "T-WA8MRS6MF44L",
+            "carnet": "2021067844",
+            "id_funcionario": "F-1234",
+            "id_centro_de_acopio": "CCA106",
+            "sede": "\u00d1ema",
+            "fecha_hora": "2024-05-27 11:56:43",
+            "materiales": [
+                {
+                    "nombre": "Lata de atun",
+                    "cantidad": "10",
+                    "valor": "135"
+                },
+                {
+                    "nombre": "carton",
+                    "cantidad": "2",
+                    "valor": "123"
+                }
+            ],
+            "total": 1596.0
+        },
+        {
+            "id_transaccion": "T-HASFG7V6CIAS",
+            "carnet": "2020202120",
+            "id_funcionario": "F-420",
+            "id_centro_de_acopio": "CCA106",
+            "sede": "Pacifico",
+            "fecha_hora": "2024-05-27 11:58:17",
+            "materiales": [
+                {
+                    "nombre": "papel ",
+                    "cantidad": "14",
+                    "valor": "123"
+                }
+            ],
+            "total": 1722.0
+        },
+        {
+            "id_transaccion": "T-L4GZSZJC5PYD",
+            "carnet": "12345678",
+            "id_funcionario": "F-4444",
+            "id_centro_de_acopio": "CA115",
+            "sede": "Central",
+            "fecha_hora": "2024-05-27 11:59:30",
+            "materiales": [
+                {
+                    "nombre": "carton",
+                    "cantidad": "11",
+                    "valor": "123"
+                }
+            ],
+            "total": 1353.0
+        }
+    ]
+}
