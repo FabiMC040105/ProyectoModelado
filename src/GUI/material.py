@@ -7,10 +7,11 @@ Clase disponible:
 
 import tkinter as tk
 from tkinter import ttk, messagebox
-from src.code.constantes import JSON_MATERIAL, PREFIJO_MATERIAL
-import os
+from src.code.constantes import PREFIJO_MATERIAL, COLUMNAS_TABLA_MATERIAL
+
 from src.code.funciones import generar_id_unico
-from src.code.material_code import cargar_materiales, agregar_material_archivo, obtener_materiales
+from src.code.material_code import cargar_materiales, limpiar_formulario_material, validar_campos_material
+from src.code.storage.material_storage import agregar_material_archivo
 
 
 class MaterialReciclajeApp:
@@ -68,7 +69,7 @@ class MaterialReciclajeApp:
         Crea la tabla de materiales.
         """
         # Crear tabla
-        columnas = ("ID", "Nombre", "Unidad", "Valor", "Estado", "Fecha de Creación", "Descripción")
+        columnas = COLUMNAS_TABLA_MATERIAL
         self.tabla = ttk.Treeview(self.tabla_frame, columns=columnas, show="headings")
 
         for col in columnas:
@@ -88,7 +89,7 @@ class MaterialReciclajeApp:
         valor = self.valor_var.get()
         descripcion = self.descripcion_var.get()
 
-        if not self.validarcampos(nombre, unidad, valor, descripcion):
+        if not validar_campos_material(nombre, unidad, valor, descripcion):
             return
 
         # Generar ID único para el material
@@ -101,52 +102,10 @@ class MaterialReciclajeApp:
         messagebox.showinfo("Éxito", "Material creado exitosamente.")
 
         # Limpiar los campos de entrada
-        limpiar_campos(self)
+        limpiar_formulario_material(self)
 
         # Recargar la tabla de materiales
         self.tabla.delete(*self.tabla.get_children())
         cargar_materiales(self)
 
-    def validarcampos(self, nombre, unidad, valor, descripcion):
-        """
-        Valida los campos del formulario.
 
-        Parámetros:
-        - nombre: El nombre del material.
-        - unidad: La unidad de medida del material.
-        - valor: El valor unitario del material.
-        - descripcion: La descripción del material.
-
-        Retorna:
-        - bool: True si los campos son válidos, False en caso contrario.
-        """
-        materiales = obtener_materiales()
-        nombrevalido = True
-        for material in materiales:
-            if material["nombre"].upper() == nombre.upper():
-                nombrevalido = False
-        if not nombrevalido:
-            messagebox.showerror("Error", "Ya existe un material con ese nombre")
-            return False
-
-        if not nombre or not unidad or not valor:
-            messagebox.showerror("Error", "Por favor complete todos los campos.")
-            return False
-        try:
-            valor = float(valor)
-        except ValueError:
-            messagebox.showerror("Error", "El valor unitario debe ser numérico.")
-            return False
-
-        if valor < 1 or valor > 100_000:
-            messagebox.showerror("Error", "El valor debe encontrarse en el rango de 1 a 100 000.")
-            return False
-
-        if len(nombre) < 5 or len(nombre) > 30:
-            messagebox.showerror("Error", "El nombre del material debe tener entre 5 y 30 caracteres.")
-            return False
-
-        if len(descripcion) > 1000:
-            messagebox.showerror("Error", "La descripción debe tener como máximo 1000 caracteres.")
-            return False
-        return True

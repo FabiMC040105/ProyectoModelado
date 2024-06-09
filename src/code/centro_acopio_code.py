@@ -1,70 +1,45 @@
-"""
-Este módulo proporciona funciones para gestionar centros de acopio mediante archivos JSON.
+from tkinter import messagebox
 
-Funciones disponibles:
-- agregar_centro_acopio_archivo: Agrega un nuevo centro de acopio al archivo JSON.
-- obtener_centros_acopio: Obtiene la lista de centros de acopio del archivo JSON.
+from src.code.storage.centro_acopio_storage import obtener_centros_acopio
 
-Constantes utilizadas:
-- JSON_CENTRO_DE_ACOPIO: Ruta del archivo JSON que contiene la información de los centros de acopio.
 
-Dependencias:
-- json: Para cargar y escribir datos en archivos JSON.
-- os: Para manipular rutas de archivos y verificar la existencia de archivos.
-"""
+def limpiar_formulario_centro_acopio(app):
+    app.sede_var.set("")
+    app.telefono_var.set("")
+    app.ubicacion_var.set("")
+    app.estado_var.set("")
+    app.codigo_var.set("")
 
-import json
-import os
-from src.code.constantes import JSON_CENTRO_DE_ACOPIO
 
-def agregar_centro_acopio_archivo(centro_acopio_id, sede, telefono, ubicacion, estado):
+def validar_campos_centro_acopio(ubicacion, estado, telefono, codigo):
     """
-    Agrega un nuevo centro de acopio al archivo JSON.
+    Valida los campos del formulario.
 
-    :param centro_acopio_id: ID del centro de acopio.
-    :type centro_acopio_id: str
-    :param sede: Sede del centro de acopio.
-    :type sede: str
-    :param telefono: Número de teléfono del centro de acopio.
-    :type telefono: str
-    :param ubicacion: Ubicación del centro de acopio.
-    :type ubicacion: str
-    :param estado: Estado del centro de acopio.
-    :type estado: str
+    Parámetros:
+    - ubicacion: La ubicación del centro de acopio.
+    - estado: El estado del centro de acopio.
+    - telefono: El número de teléfono del centro de acopio.
+    - codigo: El código ID del centro de acopio.
+
+    Retorna:
+    - bool: True si los campos son válidos, False en caso contrario.
     """
-    nuevo_centro_acopio = {
-        "id": centro_acopio_id,
-        "sede": sede,
-        "telefono": telefono,
-        "ubicacion": ubicacion,
-        "estado": estado
-    }
+    centrosdeacopio = obtener_centros_acopio()
+    idvalida = True
+    for centro in centrosdeacopio:
+        if centro["id"] == codigo:
+            idvalida = False
+    if not idvalida:
+        messagebox.showerror("Error", "Ya existe un Centro de acopio con ese nombre")
+        return False
 
-    archivo_centros_acopio = os.path.join(os.path.dirname(__file__), "..", "db",  JSON_CENTRO_DE_ACOPIO)
-    if os.path.exists(archivo_centros_acopio):
-        with open(archivo_centros_acopio, "r") as file:
-            data = json.load(file)
-    else:
-        data = {
-            "Centro de acopio": []
-        }
+    # Validar que todos los campos estén completos
+    if not telefono or not ubicacion or not estado or not codigo:
+        messagebox.showerror("Error", "Por favor complete todos los campos.")
+        return False
 
-    data["Centro de acopio"].append(nuevo_centro_acopio)
-
-    with open(archivo_centros_acopio, "w") as file:
-        json.dump(data, file, indent=4)
-
-def obtener_centros_acopio():
-    """
-    Obtiene la lista de centros de acopio del archivo JSON.
-
-    :return: Lista de centros de acopio.
-    :rtype: list[dict]
-    """
-    archivo_centros_acopio = os.path.join(os.path.dirname(__file__), "..", "db", JSON_CENTRO_DE_ACOPIO)
-    if os.path.exists(archivo_centros_acopio):
-        with open(archivo_centros_acopio, "r") as file:
-            data = json.load(file)
-            return data.get("Centro de acopio", [])
-    else:
-        return []
+    # Validar el formato del número de teléfono
+    if not telefono.isdigit() or len(telefono) != 8:
+        messagebox.showerror("Error", "El número de teléfono debe ser un valor numérico de 8 dígitos.")
+        return False
+    return True

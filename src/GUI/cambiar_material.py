@@ -6,13 +6,12 @@ Clase disponible:
 """
 
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk
 from src.code.cambiar_material_code import *
 
-from src.code.cambiar_material_code import validar_cantidad_material, obtener_detalles_material, calcular_monto, \
-    limpiar_material_formulario, registrar_transaccion
-from src.code.funciones import verificar_carnet_estudiante
+from src.code.cambiar_material_code import  obtener_detalles_material, calcular_monto
 from src.code.sede_code import obtener_sedes_activas
+from src.code.storage.cambiar_material_storage import registrar_transaccion
 
 
 class CambiarMaterialApp:
@@ -107,7 +106,7 @@ class CambiarMaterialApp:
         material_info = obtener_detalles_material(nombre)
         monto = calcular_monto(material_info['valor'], cantidad)
         self.tabla.insert("", "end", values=(nombre, material_info['valor'], material_info['unidad'], cantidad, monto))
-        limpiar_material_formulario(self)
+        limpiar_formulario_cambiar_material(self)
 
     def realizar_cambio(self):
         """
@@ -116,7 +115,7 @@ class CambiarMaterialApp:
         carnet = self.carnet_var.get()
         sede = self.sede_var.get()
         materiales = []
-        total = 0
+        lista_de_totales = []
         for item in self.tabla.get_children():
             values = self.tabla.item(item, "values")
             materiales.append({
@@ -124,7 +123,8 @@ class CambiarMaterialApp:
                 "cantidad": values[3],
                 "valor": values[1]
             })
-            total += float(values[4])
+            lista_de_totales.append(values[4])
+        total = cacular_monto_total_cambio(lista_de_totales)
         if not validar_campos_transacción(materiales, sede, carnet):
             return
         if registrar_transaccion(carnet, self.id_funcionario, sede, materiales, total):
@@ -132,4 +132,4 @@ class CambiarMaterialApp:
             self.tabla.delete(*self.tabla.get_children())
         else:
             messagebox.showerror("Error", "Hubo un problema al registrar la transacción.")
-        limpiar_formulario(self)
+        limpiar_formulario_cambiar_material(self)
