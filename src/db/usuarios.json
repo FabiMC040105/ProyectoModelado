@@ -1,0 +1,5 @@
+{
+    "admin@tec.ac.cr": {"contrasena": "1234abcd", "rol": "administrador"},
+    "estudiante@tec.ac.cr": {"contrasena": "56789abcd", "rol": "estudiante"},
+    "centro@tec.ac.cr": {"contrasena": "9900abcd", "rol": "centro_acopio"}
+}
