@@ -25,12 +25,9 @@ Módulos relacionados:
 
 """
 
-import json
-import os
-from datetime import datetime
+
 from tkinter import messagebox
-from src.code.constantes import JSON_TRANSACCIONES_CENTRO_DE_ACOPIO, PREFIJO_TRANSACCION
-from src.code.funciones import generar_id_unico, obtener_funcionarios, verificar_carnet_estudiante
+from src.code.funciones import verificar_carnet_estudiante
 from src.code.material_code import obtener_materiales
 from src.code.sede_code import validar_nombre_sede
 
@@ -76,11 +73,16 @@ def validar_cantidad_material(cantidad, nombre_material):
     material = obtener_detalles_material(nombre_material)
     unidad = material['unidad']
     try:
+        if cantidad =='':
+            messagebox.showerror("Error de material", "Debe ingresar una cantidad.")
+            return False
         if unidad == "Unidad" and not cantidad.isdigit():
             raise ValueError("La cantidad debe ser un número entero.")
         cantidad = float(cantidad)
+
         if unidad != "Unidad" and cantidad <= 0:
-            raise ValueError("La cantidad debe ser un número positivo.")
+            messagebox.showerror("Error de material", "La cantidad debe ser un número positivo.")
+            return False
     except ValueError as e:
         messagebox.showerror("Error de Validación", str(e))
         return False
@@ -126,22 +128,13 @@ def calcular_monto(valor, cantidad):
     """
     return round(float(valor) * float(cantidad), 2)
 
+def cacular_monto_total_cambio(datos_tabla):
+    total_cambio = 0
+    for item in datos_tabla:
+        total_cambio += float(item)
+    return total_cambio
 
-def limpiar_formulario(app):
-    """
-    Limpia los campos del formulario de la aplicación.
-
-    :param app: Objeto de la aplicación.
-    :type app: tkinter.Tk
-    """
-    app.carnet_var.set("")
-    app.sede_var.set("")
-    app.material_var.set("")
-    app.detalle_var.set("")
-    app.cantidad_var.set("")
-
-
-def limpiar_material_formulario(app):
+def limpiar_formulario_cambiar_material(app):
     """
     Limpia los campos relacionados con el material en el formulario.
 
@@ -153,47 +146,3 @@ def limpiar_material_formulario(app):
     app.cantidad_var.set("")
 
 
-def registrar_transaccion(carnet, id_funcionario, sede, materiales, total):
-    """
-    Registra una nueva transacción en el archivo JSON.
-
-    :param carnet: Carnet del estudiante.
-    :type carnet: str
-    :param id_funcionario: ID del funcionario.
-    :type id_funcionario: str
-    :param sede: Sede del centro de acopio.
-    :type sede: str
-    :param materiales: Lista de materiales de la transacción.
-    :type materiales: list[dict]
-    :param total: Total de la transacción.
-    :type total: float
-    :return: True si se registra la transacción correctamente, False si ocurre un error.
-    :rtype: bool
-    """
-    try:
-        archivo_transacciones = os.path.join(os.path.dirname(__file__), "..", "db", JSON_TRANSACCIONES_CENTRO_DE_ACOPIO)
-        if os.path.exists(archivo_transacciones):
-            with open(archivo_transacciones, "r") as file:
-                data = json.load(file)
-        else:
-            data = {"Transacciones": []}
-        funcionario = obtener_funcionarios(id_funcionario)
-        transaccion = {
-            "id_transaccion": generar_id_unico(PREFIJO_TRANSACCION),
-            "carnet": carnet,
-            "id_funcionario": id_funcionario,
-            "id_centro_de_acopio": funcionario["idcentro"],
-            "sede": sede,
-            "fecha_hora": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "materiales": materiales,
-            "total": total
-        }
-
-        data["Transacciones"].append(transaccion)
-
-        with open(archivo_transacciones, "w") as file:
-            json.dump(data, file, indent=4)
-        return True
-    except Exception as e:
-        print(f"Error registrando la transacción: {e}")
-        return False

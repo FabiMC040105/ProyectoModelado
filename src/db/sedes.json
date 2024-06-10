@@ -48,6 +48,20 @@
             "ubicacion": "Puntarenas",
             "estado": "Activo",
             "telefono": "89898989"
+        },
+        {
+            "id": "S-7C9JD1ZAU5QE",
+            "nombre": "tertgd",
+            "ubicacion": "Alajuela",
+            "estado": "Activo",
+            "telefono": "12344567"
+        },
+        {
+            "id": "S-EE1VNMAPCYFH",
+            "nombre": "Caribe",
+            "ubicacion": "Lim\u00f3n",
+            "estado": "Inactivo",
+            "telefono": "12345670"
         }
     ]
 }

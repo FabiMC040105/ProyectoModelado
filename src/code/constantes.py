@@ -12,6 +12,7 @@ COLUMNAS_TABLA_SEDE = ("Nombre", "Ubicación", "Estado", "Teléfono")
 COLUMNAS_TABLA_CENTRO_ACOPIO = ("Sede", "Número Telefónico", "Ubicación", "Estado")
 COLUMNAS_TABLA_TRANSACCIONES_CENTRO_ACOPIO = ("id_transaccion", "carnet", "sede", "fecha_hora", "materiales", "total")
 
+
 # Prefijos
 PREFIJO_MATERIAL = "M-"
 PREFIJO_SEDE = "S-"

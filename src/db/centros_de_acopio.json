@@ -48,6 +48,20 @@
             "telefono": "67676767",
             "ubicacion": "Playa Bonita",
             "estado": "Activo"
+        },
+        {
+            "id": "CE1105",
+            "sede": "Pacifico",
+            "telefono": "12345678",
+            "ubicacion": "edificio central",
+            "estado": "Activo"
+        },
+        {
+            "id": "1234",
+            "sede": "Central",
+            "telefono": "12345678",
+            "ubicacion": "sdfgh",
+            "estado": "Activo"
         }
     ]
 }

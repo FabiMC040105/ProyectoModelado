@@ -68,6 +68,7 @@ class VerTransaccionesCentroAcopio:
         Carga todas las transacciones del centro de acopio en la tabla.
         """
         transacciones = cargar_transacciones(self.id_funcionario)
+        print(transacciones)
         for transaccion in transacciones:
             self.tabla.insert("", "end", values=(
                 transaccion["id_transaccion"], transaccion["carnet"], transaccion["sede"], transaccion["fecha_hora"],

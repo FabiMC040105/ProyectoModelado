@@ -5,12 +5,12 @@ Clase disponible:
 - CentroAcopioApp: Clase que gestiona la interfaz gráfica y las operaciones de creación de centros de acopio.
 """
 
-import json
-import os
 import tkinter as tk
 from tkinter import ttk, messagebox
 
-from src.code.centro_acopio_code import obtener_centros_acopio, agregar_centro_acopio_archivo
+from src.code.centro_acopio_code import limpiar_formulario_centro_acopio, validar_campos_centro_acopio
+from src.code.constantes import COLUMNAS_TABLA_CENTRO_ACOPIO
+from src.code.storage.centro_acopio_storage import obtener_centros_acopio, agregar_centro_acopio_archivo
 from src.code.sede_code import obtener_sedes_activas
 
 
@@ -75,7 +75,7 @@ class CentroAcopioApp:
         Crea la tabla de centros de acopio.
         """
         # Crear tabla
-        columnas = ("Sede", "Número Telefónico", "Ubicación", "Estado")
+        columnas = COLUMNAS_TABLA_CENTRO_ACOPIO
         self.tabla = ttk.Treeview(self.tabla_frame, columns=columnas, show="headings")
 
         for col in columnas:
@@ -105,7 +105,7 @@ class CentroAcopioApp:
         estado = self.estado_var.get()
         codigo = self.codigo_var.get()
 
-        if not self.validarcampos(ubicacion, estado, telefono, codigo):
+        if not validar_campos_centro_acopio(ubicacion, estado, telefono, codigo):
             return
 
         # Generar ID único para el centro de acopio
@@ -118,45 +118,9 @@ class CentroAcopioApp:
         messagebox.showinfo("Éxito", "Centro de acopio creado exitosamente.")
 
         # Limpiar los campos de entrada
-        self.sede_var.set("")
-        self.telefono_var.set("")
-        self.ubicacion_var.set("")
-        self.estado_var.set("")
-        self.codigo_var.set("")
+        limpiar_formulario_centro_acopio(self)
 
         # Recargar la tabla de centros de acopio
         self.tabla.delete(*self.tabla.get_children())
         self.cargar_centros_acopio()
 
-    def validarcampos(self, ubicacion, estado, telefono, codigo):
-        """
-        Valida los campos del formulario.
-
-        Parámetros:
-        - ubicacion: La ubicación del centro de acopio.
-        - estado: El estado del centro de acopio.
-        - telefono: El número de teléfono del centro de acopio.
-        - codigo: El código ID del centro de acopio.
-
-        Retorna:
-        - bool: True si los campos son válidos, False en caso contrario.
-        """
-        centrosdeacopio = obtener_centros_acopio()
-        idvalida = True
-        for centro in centrosdeacopio:
-            if centro["id"] == codigo:
-                idvalida = False
-        if not idvalida:
-            messagebox.showerror("Error", "Ya existe un Centro de acopio con ese nombre")
-            return False
-
-        # Validar que todos los campos estén completos
-        if not telefono or not ubicacion or not estado or not codigo:
-            messagebox.showerror("Error", "Por favor complete todos los campos.")
-            return False
-
-        # Validar el formato del número de teléfono
-        if not telefono.isdigit() or len(telefono) != 8:
-            messagebox.showerror("Error", "El número de teléfono debe ser un valor numérico de 8 dígitos.")
-            return False
-        return True

@@ -44,6 +44,15 @@
             "estado": "Activo",
             "fecha_creacion": "2024-05-27 10:23:42",
             "descripcion": "Limpio"
+        },
+        {
+            "id": "M-SQTG2BJZHM4E",
+            "nombre": "Lata de refresco 355ml",
+            "unidad": "Unidad",
+            "valor": "250",
+            "estado": "Activo",
+            "fecha_creacion": "2024-06-08 19:47:43",
+            "descripcion": "Limpia"
         }
     ]
 }

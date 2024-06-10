@@ -14,62 +14,9 @@ Dependencias:
 - src.code.funciones.obtener_fecha_actual: Función para obtener la fecha actual.
 """
 
-import json
-import os
-from src.code.constantes import JSON_MATERIAL
-from src.code.funciones import obtener_fecha_actual
+from tkinter import messagebox
+from src.code.storage.material_storage import obtener_materiales
 
-def agregar_material_archivo(material_id, nombre, unidad, valor, descripcion):
-    """
-    Agrega un nuevo material al archivo JSON especificado.
-
-    Parámetros:
-    - material_id (str): ID del material.
-    - nombre (str): Nombre del material.
-    - unidad (str): Unidad de medida del material.
-    - valor (float): Valor del material.
-    - descripcion (str): Descripción del material.
-    """
-    nuevo_material = {
-        "id": material_id,
-        "nombre": nombre,
-        "unidad": unidad,
-        "valor": valor,
-        "estado": "Activo",
-        "fecha_creacion": obtener_fecha_actual(),
-        "descripcion": descripcion
-    }
-
-    archivo = os.path.join(os.path.dirname(__file__), "..", "db", JSON_MATERIAL)
-
-    if os.path.exists(archivo):
-        with open(archivo, "r") as file:
-            data = json.load(file)
-    else:
-        data = {
-            "Materiales": [],
-        }
-
-    data["Materiales"].append(nuevo_material)
-
-    with open(archivo, "w") as file:
-        json.dump(data, file, indent=4)
-
-
-def obtener_materiales():
-    """
-    Obtiene la lista de materiales del archivo JSON especificado.
-
-    Retorna:
-    - list: Lista de materiales.
-    """
-    archivo_materiales = os.path.join(os.path.dirname(__file__), "..", "db",  JSON_MATERIAL)
-    if os.path.exists(archivo_materiales):
-        with open(archivo_materiales, "r") as file:
-            data = json.load(file)
-            return data.get("Materiales", [])
-    else:
-        return []
 
 def obtener_nombre_materiales():
     """
@@ -97,7 +44,7 @@ def cargar_materiales(self):
         material["fecha_creacion"], material["descripcion"]))
 
 
-def limpiar_formulario(app):
+def limpiar_formulario_material(app):
     """
     Limpia los campos del formulario de la aplicación.
 
@@ -108,3 +55,49 @@ def limpiar_formulario(app):
     app.unidad_var.set("")
     app.valor_var.set("")
     app.descripcion_var.set("")
+
+
+
+def validar_campos_material( nombre, unidad, valor, descripcion):
+    """
+    Valida los campos del formulario.
+
+    Parámetros:
+    - nombre: El nombre del material.
+    - unidad: La unidad de medida del material.
+    - valor: El valor unitario del material.
+    - descripcion: La descripción del material.
+
+    Retorna:
+    - bool: True si los campos son válidos, False en caso contrario.
+    """
+    materiales = obtener_materiales()
+    nombrevalido = True
+    for material in materiales:
+        if material["nombre"].upper() == nombre.upper():
+            nombrevalido = False
+    if not nombrevalido:
+        messagebox.showerror("Error", "Ya existe un material con ese nombre")
+        return False
+
+    if not nombre or not unidad or not valor:
+        messagebox.showerror("Error", "Por favor complete todos los campos.")
+        return False
+    try:
+        valor = float(valor)
+    except ValueError:
+        messagebox.showerror("Error", "El valor unitario debe ser numérico.")
+        return False
+
+    if valor < 1 or valor > 100_000:
+        messagebox.showerror("Error", "El valor debe encontrarse en el rango de 1 a 100 000.")
+        return False
+
+    if len(nombre) < 5 or len(nombre) > 30:
+        messagebox.showerror("Error", "El nombre del material debe tener entre 5 y 30 caracteres.")
+        return False
+
+    if len(descripcion) > 1000:
+        messagebox.showerror("Error", "La descripción debe tener como máximo 1000 caracteres.")
+        return False
+    return True
