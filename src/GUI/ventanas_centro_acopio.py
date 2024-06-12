@@ -10,25 +10,27 @@ from tkinter import ttk
 from src.GUI.cambiar_material import CambiarMaterialApp
 from src.GUI.ver_transacciones import VerTransaccionesCentroAcopio
 
-class AppPrincipalCentroAcopio:
+class AppPrincipalCentroAcopio(tk.Frame):
     """
     Clase para la interfaz principal de la gestión de un centro de acopio en la aplicación de reciclaje.
     """
 
-    def __init__(self, root, id_funcionario):
+    def __init__(self, master=None, id_funcionario=None):
         """
         Inicializa la aplicación principal del centro de acopio.
 
         Parámetros:
-        - root: El objeto raíz de la interfaz gráfica.
+        - master: El objeto raíz de la interfaz gráfica.
         - id_funcionario: El identificador del funcionario que maneja el centro de acopio.
         """
-        self.root = root
+        super().__init__(master)
+        self.master = master
         self.id_funcionario = id_funcionario
-        self.root.title("Centro de Acopio - Gestión de Reciclaje")
+        self.master.title("Centro de Acopio - Gestión de Reciclaje")
+        self.pack(fill=tk.BOTH, expand=True)
 
         # Crear el contenedor principal
-        main_frame = ttk.Frame(self.root)
+        main_frame = ttk.Frame(self)
         main_frame.pack(fill=tk.BOTH, expand=True)
 
         # Crear el panel lateral con los botones
@@ -68,6 +70,6 @@ class AppPrincipalCentroAcopio:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = AppPrincipalCentroAcopio(root, "CCA106")
+    app = AppPrincipalCentroAcopio(master=root, id_funcionario="CCA106")
+    app.pack(expand=True, fill='both')
     root.mainloop()
-
