@@ -16,6 +16,8 @@ Dependencias:
 import json
 import os
 from src.code.constantes import JSON_CENTRO_DE_ACOPIO
+from src.code.storage.centro_acopio_storage import obtener_centros_acopio
+
 
 def agregar_centro_acopio_archivo(centro_acopio_id, sede, telefono, ubicacion, estado):
     """
@@ -40,7 +42,9 @@ def agregar_centro_acopio_archivo(centro_acopio_id, sede, telefono, ubicacion, e
         "estado": estado
     }
 
-    archivo_centros_acopio = os.path.join(os.path.dirname(__file__), "..", "db",  JSON_CENTRO_DE_ACOPIO)
+    archivo_centros_acopio = os.path.join(os.path.dirname(__file__), "..", "..", "db",  JSON_CENTRO_DE_ACOPIO)
+    print(archivo_centros_acopio)
+    print(os.path.exists(archivo_centros_acopio))
     if os.path.exists(archivo_centros_acopio):
         with open(archivo_centros_acopio, "r") as file:
             data = json.load(file)
@@ -54,17 +58,28 @@ def agregar_centro_acopio_archivo(centro_acopio_id, sede, telefono, ubicacion, e
     with open(archivo_centros_acopio, "w") as file:
         json.dump(data, file, indent=4)
 
-def obtener_centros_acopio():
-    """
-    Obtiene la lista de centros de acopio del archivo JSON.
 
-    :return: Lista de centros de acopio.
+
+def obtener_centros_acopio_activos():
+    """
+    Obtiene los centros de acopio activos.
+
+    :return: Lista de centros de acopio activos.
     :rtype: list[dict]
     """
-    archivo_centros_acopio = os.path.join(os.path.dirname(__file__), "..", "db", JSON_CENTRO_DE_ACOPIO)
-    if os.path.exists(archivo_centros_acopio):
-        with open(archivo_centros_acopio, "r") as file:
-            data = json.load(file)
-            return data.get("Centro de acopio", [])
-    else:
-        return []
+    centros_acopio_activos = []
+    centros_acopio = obtener_centros_acopio()
+    for centro in centros_acopio:
+        if centro["estado"] == "Activo":
+            centros_acopio_activos.append(centro)
+    return centros_acopio_activos
+
+def obtener_transacciones_centro_acopio_con_id(transacciones, id_centro_acopio):
+    """
+    Obtiene los centros de acopio activos.
+
+    :return: Lista de centros de acopio activos.
+    :rtype: list[dict]
+    """
+    transacciones_centro_acopio = [t for t in transacciones if t["id_centro_de_acopio"] == id_centro_acopio]
+    return transacciones_centro_acopio

@@ -9,7 +9,9 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from src.code.constantes import JSON_SEDE, COLUMNAS_TABLA_SEDE, PREFIJO_SEDE
 from src.code.funciones import generar_id_unico
-from src.code.sede_code import obtener_sedes, agregar_sede_archivo
+from src.code.sede_code import obtener_sedes
+from src.code.storage.sede_storage import agregar_sede_archivo
+
 
 class SedeApp:
     """

@@ -6,7 +6,7 @@
             "id_funcionario": "F-1234",
             "id_centro_de_acopio": "CCA106",
             "sede": "Pacifico",
-            "fecha_hora": "2024-05-27 11:52:25",
+            "fecha_hora": "2024-05-25 11:52:25",
             "materiales": [
                 {
                     "nombre": "carton",
@@ -22,7 +22,7 @@
             "id_funcionario": "F-1234",
             "id_centro_de_acopio": "CCA106",
             "sede": "\u00d1ema",
-            "fecha_hora": "2024-05-27 11:56:43",
+            "fecha_hora": "2024-05-26 11:56:43",
             "materiales": [
                 {
                     "nombre": "Lata de atun",
@@ -68,6 +68,22 @@
                 }
             ],
             "total": 1353.0
+        },
+        {
+            "id_transaccion": "T-ACFT07D3FPD4",
+            "carnet": "",
+            "id_funcionario": "F-4444",
+            "id_centro_de_acopio": "CA115",
+            "sede": "\u00d1ema",
+            "fecha_hora": "2024-06-12 16:30:10",
+            "materiales": [
+                {
+                    "nombre": "carton",
+                    "cantidad": "4",
+                    "valor": "123"
+                }
+            ],
+            "total": 492.0
         }
     ]
 }

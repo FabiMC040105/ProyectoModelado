@@ -2,77 +2,26 @@
 Este módulo proporciona funciones para la gestión de sedes y la manipulación de archivos JSON.
 
 Funciones disponibles:
-- agregar_sede_archivo: Agrega una nueva sede al archivo JSON de sedes.
-- obtener_sedes: Obtiene la lista de sedes del archivo JSON de sedes.
 - obtener_sedes_activas: Obtiene las sedes activas.
+- validar_nombre_sede: Valida el nombre de una sede.
+- validar_campos_form_sede: Valida los campos del formulario de sede.
+- limpiar_formulario_sede: Limpia los campos del formulario de la aplicación.
 
 Dependencias:
-- json: Para cargar y escribir datos en archivos JSON.
-- os: Para manipular rutas de archivos y verificar la existencia de archivos.
-- src.code.constantes.JSON_SEDE: Ruta del archivo JSON que contiene la información de las sedes.
+- tkinter.messagebox: Para mostrar mensajes de error en la interfaz gráfica.
+- src.code.storage.sede_storage.obtener_sedes: Función para obtener la lista de sedes.
+
 """
 
-import json
-import os
-from src.code.constantes import JSON_SEDE
-
-def agregar_sede_archivo(sede_id, nombre, ubicacion, estado, telefono):
-    """
-    Agrega una nueva sede al archivo JSON de sedes.
-
-    Parámetros:
-    - sede_id (str): ID de la sede.
-    - nombre (str): Nombre de la sede.
-    - ubicacion (str): Ubicación de la sede.
-    - estado (str): Estado de la sede.
-    - telefono (str): Número de teléfono de la sede.
-    """
-    nueva_sede = {
-        "id": sede_id,
-        "nombre": nombre,
-        "ubicacion": ubicacion,
-        "estado": estado,
-        "telefono": telefono
-    }
-
-    archivo_sedes = os.path.join(os.path.dirname(__file__), "..", "db", JSON_SEDE)
-    if os.path.exists(archivo_sedes):
-        with open(archivo_sedes, "r") as file:
-            data = json.load(file)
-    else:
-        data = {
-            "Sedes": []
-        }
-
-    data["Sedes"].append(nueva_sede)
-
-    with open(archivo_sedes, "w") as file:
-        json.dump(data, file, indent=4)
-
-
-def obtener_sedes():
-    """
-    Obtiene la lista de sedes del archivo JSON de sedes.
-
-    Retorna:
-    - list: Lista de sedes.
-    """
-    archivo_sedes = os.path.join(os.path.dirname(__file__), "..", "db", JSON_SEDE)
-
-    if os.path.exists(archivo_sedes):
-        with open(archivo_sedes, "r") as file:
-            data = json.load(file)
-            return data.get("Sedes", [])
-    else:
-        return []
-
+from tkinter import messagebox
+from src.code.storage.sede_storage import obtener_sedes
 
 def obtener_sedes_activas():
     """
     Obtiene las sedes activas.
 
-    Retorna:
-    - list: Lista de nombres de sedes activas.
+    :return: Lista de nombres de sedes activas.
+    :rtype: list
     """
     sedes_activas = []
     sedes = obtener_sedes()
@@ -80,3 +29,70 @@ def obtener_sedes_activas():
         if sede["estado"] == "Activo":
             sedes_activas.append(sede["nombre"])
     return sedes_activas
+
+def validar_nombre_sede(nombre_sede):
+    """
+    Valida el nombre de una sede.
+
+    :param nombre_sede: El nombre de la sede a validar.
+    :type nombre_sede: str
+    :return: True si el nombre de la sede es válido, False si no lo es.
+    :rtype: bool
+    """
+    sedes = obtener_sedes_activas()
+
+    for sede in sedes:
+        if sede == nombre_sede:
+            return True
+    messagebox.showerror("Error de sede", "Nombre de sede incorrecto")
+    return False
+
+def validar_campos_form_sede(nombre, ubicacion, estado, telefono):
+    """
+    Valida los campos del formulario de sede.
+
+    :param nombre: El nombre de la sede.
+    :type nombre: str
+    :param ubicacion: La ubicación de la sede.
+    :type ubicacion: str
+    :param estado: El estado de la sede.
+    :type estado: str
+    :param telefono: El número de teléfono de la sede.
+    :type telefono: str
+    :return: True si los campos son válidos, False en caso contrario.
+    :rtype: bool
+    """
+    sedes = obtener_sedes()
+    nombrevalido = True
+    for sede in sedes:
+        if sede["nombre"].upper() == nombre.upper():
+            nombrevalido = False
+    if not nombrevalido:
+        messagebox.showerror("Error", "Ya existe un sede con ese nombre")
+        return False
+    if not nombre or not ubicacion or not estado or not telefono:
+        messagebox.showerror("Error", "Por favor complete todos los campos.")
+        return False
+
+    try:
+        telefono = int(telefono)
+    except ValueError:
+        messagebox.showerror("Error", "El número de teléfono debe ser numérico.")
+        return False
+
+    if len(str(telefono)) != 8:
+        messagebox.showerror("Error", "El número de teléfono debe tener 8 dígitos.")
+        return False
+    return True
+
+def limpiar_formulario_sede(app):
+    """
+    Limpia los campos del formulario de la aplicación.
+
+    :param app: Objeto de la aplicación.
+    :type app: tkinter.Tk
+    """
+    app.nombre_var.set("")
+    app.ubicacion_var.set("")
+    app.estado_var.set("")
+    app.telefono_var.set("")
