@@ -3,14 +3,20 @@ Este módulo proporciona funciones para gestionar centros de acopio mediante arc
 
 Funciones disponibles:
 - agregar_centro_acopio_archivo: Agrega un nuevo centro de acopio al archivo JSON.
-- obtener_centros_acopio: Obtiene la lista de centros de acopio del archivo JSON.
-
-Constantes utilizadas:
-- JSON_CENTRO_DE_ACOPIO: Ruta del archivo JSON que contiene la información de los centros de acopio.
+- obtener_centros_acopio_activos: Obtiene la lista de centros de acopio activos.
+- obtener_sede_de_centros_acopio: Obtiene la sede asociada a un centro de acopio por su ID.
+- obtener_transacciones_centro_acopio_con_id: Obtiene las transacciones de un centro de acopio específico.
+- limpiar_formulario_centro_acopio: Limpia los campos del formulario del centro de acopio.
+- validar_campos_centro_acopio: Valida los campos del formulario del centro de acopio.
+- validar_nombre_centro: Valida el nombre de un centro de acopio.
 
 Dependencias:
 - json: Para cargar y escribir datos en archivos JSON.
 - os: Para manipular rutas de archivos y verificar la existencia de archivos.
+- tkinter.messagebox: Para mostrar mensajes de error en la interfaz gráfica.
+
+Constantes utilizadas:
+- JSON_CENTRO_DE_ACOPIO: Ruta del archivo JSON que contiene la información de los centros de acopio.
 """
 
 import json
@@ -19,7 +25,6 @@ from tkinter import messagebox
 
 from src.code.constantes import JSON_CENTRO_DE_ACOPIO
 from src.code.storage.centro_acopio_storage import obtener_centros_acopio
-
 
 def agregar_centro_acopio_archivo(centro_acopio_id, sede, telefono, ubicacion, estado):
     """
@@ -44,7 +49,7 @@ def agregar_centro_acopio_archivo(centro_acopio_id, sede, telefono, ubicacion, e
         "estado": estado
     }
 
-    archivo_centros_acopio = os.path.join(os.path.dirname(__file__), "..", "..", "db",  JSON_CENTRO_DE_ACOPIO)
+    archivo_centros_acopio = os.path.join(os.path.dirname(__file__), "..", "..", "db", JSON_CENTRO_DE_ACOPIO)
 
     if os.path.exists(archivo_centros_acopio):
         with open(archivo_centros_acopio, "r") as file:
@@ -58,8 +63,6 @@ def agregar_centro_acopio_archivo(centro_acopio_id, sede, telefono, ubicacion, e
 
     with open(archivo_centros_acopio, "w") as file:
         json.dump(data, file, indent=4)
-
-
 
 def obtener_centros_acopio_activos():
     """
@@ -76,42 +79,60 @@ def obtener_centros_acopio_activos():
     return centros_acopio_activos
 
 def obtener_sede_de_centros_acopio(codigo):
+    """
+    Obtiene la sede asociada a un centro de acopio por su ID.
+
+    :param codigo: ID del centro de acopio.
+    :type codigo: str
+    :return: Sede del centro de acopio.
+    :rtype: str
+    """
     centrosdeacopio = obtener_centros_acopio()
     for centro in centrosdeacopio:
         if centro["id"] == codigo:
             return centro["sede"]
 
-
 def obtener_transacciones_centro_acopio_con_id(transacciones, id_centro_acopio):
     """
-    Obtiene los centros de acopio activos.
+    Obtiene las transacciones de un centro de acopio específico.
 
-    :return: Lista de centros de acopio activos.
+    :param transacciones: Lista de transacciones.
+    :type transacciones: list[dict]
+    :param id_centro_acopio: ID del centro de acopio.
+    :type id_centro_acopio: str
+    :return: Lista de transacciones del centro de acopio.
     :rtype: list[dict]
     """
     transacciones_centro_acopio = [t for t in transacciones if t["id_centro_de_acopio"] == id_centro_acopio]
     return transacciones_centro_acopio
 
 def limpiar_formulario_centro_acopio(app):
+    """
+    Limpia los campos del formulario del centro de acopio.
+
+    :param app: Objeto de la aplicación.
+    :type app: tkinter.Tk
+    """
     app.sede_var.set("")
     app.telefono_var.set("")
     app.ubicacion_var.set("")
     app.estado_var.set("")
     app.codigo_var.set("")
 
-
 def validar_campos_centro_acopio(ubicacion, estado, telefono, codigo):
     """
-    Valida los campos del formulario.
+    Valida los campos del formulario del centro de acopio.
 
-    Parámetros:
-    - ubicacion: La ubicación del centro de acopio.
-    - estado: El estado del centro de acopio.
-    - telefono: El número de teléfono del centro de acopio.
-    - codigo: El código ID del centro de acopio.
-
-    Retorna:
-    - bool: True si los campos son válidos, False en caso contrario.
+    :param ubicacion: La ubicación del centro de acopio.
+    :type ubicacion: str
+    :param estado: El estado del centro de acopio.
+    :type estado: str
+    :param telefono: El número de teléfono del centro de acopio.
+    :type telefono: str
+    :param codigo: El código ID del centro de acopio.
+    :type codigo: str
+    :return: True si los campos son válidos, False en caso contrario.
+    :rtype: bool
     """
     centrosdeacopio = obtener_centros_acopio()
     idvalida = True
@@ -135,11 +156,11 @@ def validar_campos_centro_acopio(ubicacion, estado, telefono, codigo):
 
 def validar_nombre_centro(id_centro):
     """
-    Valida el nombre de una sede.
+    Valida el nombre de un centro de acopio.
 
-    :param nombre_sede: El nombre de la sede a validar.
-    :type nombre_sede: str
-    :return: True si el nombre de la sede es válido, False si no lo es.
+    :param id_centro: El ID del centro de acopio a validar.
+    :type id_centro: str
+    :return: True si el nombre del centro de acopio es válido, False si no lo es.
     :rtype: bool
     """
     centros = obtener_centros_acopio_activos()

@@ -99,9 +99,7 @@ class CambiarMaterialApp:
         Muestra los detalles del material seleccionado en el ComboBox.
         """
         nombre_material = self.material_var.get()
-        print("el nombre del material es: " + nombre_material)
         detalles = obtener_detalles_material(nombre_material)
-        print(detalles)
         self.detalle_var.set(f"Unidad: {detalles['unidad']}, Valor: {detalles['valor']}, Descripción: {detalles['descripcion']}")
 
     def agregar_material(self):
@@ -109,9 +107,7 @@ class CambiarMaterialApp:
         Agrega el material seleccionado y su cantidad a la tabla de materiales.
         """
         nombre = self.material_var.get()
-        nombre = "carton"
         cantidad = self.cantidad_var.get()
-        cantidad = 5
         if not validar_campos_material(nombre, cantidad):
             return
         material_info = obtener_detalles_material(nombre)
@@ -124,9 +120,7 @@ class CambiarMaterialApp:
         Realiza la transacción de cambio de material.
         """
         carnet = self.carnet_var.get()
-        carnet = "estudiante@tec.ac.cr"
         centro = self.centro_acopio_var.get()
-        centro = "CCA15"
         materiales = []
         lista_de_totales = []
         for item in self.tabla.get_children():

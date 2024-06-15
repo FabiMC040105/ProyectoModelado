@@ -8,7 +8,7 @@ Clase disponible:
 import tkinter as tk
 from tkinter import ttk, messagebox
 
-from src.code.centro_acopio_code import limpiar_formulario_centro_acopio
+from src.code.centro_acopio_code import limpiar_formulario_centro_acopio, validar_campos_centro_acopio
 from src.code.constantes import COLUMNAS_TABLA_CENTRO_ACOPIO
 from src.code.storage.centro_acopio_storage import obtener_centros_acopio, agregar_centro_acopio_archivo
 from src.code.sede_code import obtener_sedes_activas

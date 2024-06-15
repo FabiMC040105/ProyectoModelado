@@ -89,9 +89,7 @@ class VerTransaccionesCentroAcopio:
         """
         Carga todas las transacciones del centro de acopio en la tabla.
         """
-        #self.centro_acopio_var.set("CCA106")
         centro_acopio_id = self.centro_acopio_var.get()
-        self.centro_acopio_var.set("CCA106")
         transacciones = obtener_transacciones_centro_acopio(centro_acopio_id)
 
         self.tabla.delete(*self.tabla.get_children())
@@ -103,12 +101,11 @@ class VerTransaccionesCentroAcopio:
         """
         Filtra las transacciones según las fechas de inicio y fin proporcionadas por el usuario.
         """
-        self.fecha_inicio_var.set("2025-05-27")
-        self.fecha_fin_var.set("2025-05-27")
+
         fecha_inicio = self.fecha_inicio_var.get()
         fecha_fin = self.fecha_fin_var.get()
         centro_acopio_id = self.centro_acopio_var.get()
-        self.centro_acopio_var.set("CCA106")
+
         self.tabla.delete(*self.tabla.get_children())
         transacciones = obtener_transacciones_centro_acopio(centro_acopio_id, fecha_inicio, fecha_fin)
         verificar_existencia_transacciones(transacciones)

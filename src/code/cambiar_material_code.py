@@ -5,10 +5,12 @@ Funciones disponibles:
 - obtener_nombre_materiales: Obtiene los nombres de los materiales disponibles.
 - obtener_detalles_material: Obtiene los detalles de un material específico.
 - validar_cantidad_material: Valida la cantidad ingresada para un material.
+- validar_nombre_material: Valida si el nombre del material es correcto.
+- validar_campos_material: Valida los campos relacionados con el material.
+- validar_campos_transacción: Valida los campos necesarios para una transacción.
 - calcular_monto: Calcula el monto total de una transacción.
-- limpiar_formulario: Limpia los campos del formulario de la aplicación.
-- limpiar_material_formulario: Limpia los campos relacionados con el material en el formulario.
-- registrar_transaccion: Registra una nueva transacción en el archivo JSON.
+- cacular_monto_total_cambio: Calcula el monto total de cambio.
+- limpiar_formulario_cambiar_material: Limpia los campos relacionados con el material en el formulario.
 
 Dependencias:
 - json: Para cargar y escribir datos en archivos JSON.
@@ -22,9 +24,7 @@ Constantes utilizadas:
 
 Módulos relacionados:
 - src.code.material_code: Contiene funciones relacionadas con la gestión de materiales.
-
 """
-
 
 from tkinter import messagebox
 
@@ -75,7 +75,7 @@ def validar_cantidad_material(cantidad, nombre_material):
     material = obtener_detalles_material(nombre_material)
     unidad = material['unidad']
     try:
-        if cantidad =='':
+        if cantidad == '':
             messagebox.showerror("Error de material", "Debe ingresar una cantidad.")
             return False
         if unidad == "Unidad" and not cantidad.isdigit():
@@ -92,6 +92,14 @@ def validar_cantidad_material(cantidad, nombre_material):
 
 
 def validar_nombre_material(nombre_material):
+    """
+    Valida si el nombre del material es correcto.
+
+    :param nombre_material: Nombre del material.
+    :type nombre_material: str
+    :return: True si el nombre es correcto, False si no lo es.
+    :rtype: bool
+    """
     materiales = obtener_nombre_materiales()
 
     for material in materiales:
@@ -102,12 +110,36 @@ def validar_nombre_material(nombre_material):
 
 
 def validar_campos_material(nombre_material, cantidad):
+    """
+    Valida los campos relacionados con el material.
+
+    :param nombre_material: Nombre del material.
+    :type nombre_material: str
+    :param cantidad: Cantidad del material.
+    :type cantidad: str
+    :return: True si los campos son válidos, False si no lo son.
+    :rtype: bool
+    """
     if (not validar_nombre_material(nombre_material)
             or not validar_cantidad_material(cantidad, nombre_material)):
         return False
     else:
         return True
+
+
 def validar_campos_transacción(materiales, centro, carnet):
+    """
+    Valida los campos necesarios para una transacción.
+
+    :param materiales: Lista de materiales.
+    :type materiales: list[dict]
+    :param centro: Nombre del centro de acopio.
+    :type centro: str
+    :param carnet: Carnet del estudiante.
+    :type carnet: str
+    :return: True si los campos son válidos, False si no lo son.
+    :rtype: bool
+    """
     if len(materiales) < 1:
         messagebox.showerror("Érror", "Debe agregar materiales a la transacción.")
         return False
@@ -118,6 +150,7 @@ def validar_campos_transacción(materiales, centro, carnet):
         messagebox.showerror("Error de carnet", "Carnet incorrecto")
         return False
     return True
+
 
 def calcular_monto(valor, cantidad):
     """
@@ -132,11 +165,21 @@ def calcular_monto(valor, cantidad):
     """
     return round(float(valor) * float(cantidad), 2)
 
+
 def cacular_monto_total_cambio(datos_tabla):
+    """
+    Calcula el monto total de cambio.
+
+    :param datos_tabla: Lista de montos.
+    :type datos_tabla: list[float]
+    :return: Monto total de cambio.
+    :rtype: float
+    """
     total_cambio = 0
     for item in datos_tabla:
         total_cambio += float(item)
     return total_cambio
+
 
 def limpiar_formulario_cambiar_material(app):
     """
@@ -148,5 +191,3 @@ def limpiar_formulario_cambiar_material(app):
     app.material_var.set("")
     app.detalle_var.set("")
     app.cantidad_var.set("")
-
-

@@ -81,13 +81,12 @@ class VerTransaccionesAdmin:
         """
         Filtra las transacciones según las fechas de inicio y fin proporcionadas por el usuario.
         """
-        self.fecha_inicio_var.set("2025-05-27")
-        self.fecha_fin_var.set("2025-05-27")
+
         fecha_inicio = self.fecha_inicio_var.get()
         fecha_fin = self.fecha_fin_var.get()
-        centro_acopio_id = ""
+
         self.tabla.delete(*self.tabla.get_children())
-        transacciones = obtener_transacciones_centro_acopio(centro_acopio_id, fecha_inicio, fecha_fin)
+        transacciones = obtener_transacciones_centro_acopio("", fecha_inicio, fecha_fin)
         verificar_existencia_transacciones(transacciones)
         mostrar_transacciones_tabla(self, transacciones)
 
