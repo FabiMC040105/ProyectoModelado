@@ -10,7 +10,8 @@ from tkinter import ttk, messagebox
 
 from src.code.centro_acopio_code import obtener_centros_acopio_activos
 from src.code.constantes import COLUMNAS_TABLA_TRANSACCIONES_CENTRO_ACOPIO
-from src.code.ver_transacciones_code import obtener_transacciones_centro_acopio
+from src.code.ver_transacciones_code import obtener_transacciones_centro_acopio, verificar_existencia_transacciones, \
+    mostrar_transacciones_tabla
 
 
 class VerTransaccionesCentroAcopio:
@@ -33,6 +34,7 @@ class VerTransaccionesCentroAcopio:
         self.tabla_frame = ttk.Frame(self.parent)
         self.tabla_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
+
         # Añadir la lista desplegable para seleccionar el centro de acopio
         ttk.Label(self.tabla_frame, text="Centro de Acopio:").grid(row=0, column=0, padx=5, pady=5)
         self.centro_acopio_var = tk.StringVar()
@@ -42,7 +44,6 @@ class VerTransaccionesCentroAcopio:
         # Obtener y cargar los centros de acopio activos en el combobox
         self.centros_acopio_activos = obtener_centros_acopio_activos()
         self.centro_acopio_combobox['values'] = [centro['id'] for centro in self.centros_acopio_activos]
-
 
         # Configurar el evento para actualizar transacciones cuando se selecciona un nuevo centro de acopio
         self.centro_acopio_combobox.bind("<<ComboboxSelected>>", self.cargar_transacciones)
@@ -88,30 +89,28 @@ class VerTransaccionesCentroAcopio:
         """
         Carga todas las transacciones del centro de acopio en la tabla.
         """
+        #self.centro_acopio_var.set("CCA106")
         centro_acopio_id = self.centro_acopio_var.get()
+        self.centro_acopio_var.set("CCA106")
         transacciones = obtener_transacciones_centro_acopio(centro_acopio_id)
 
         self.tabla.delete(*self.tabla.get_children())
-        if not transacciones:
-            messagebox.showinfo("Sin transacciones", "No hay transacciones para mostrar para el centro de acopio seleccionado.")
-            return
+        verificar_existencia_transacciones(transacciones)
 
-        for transaccion in transacciones:
-            self.tabla.insert("", "end", values=(
-                transaccion["id_transaccion"], transaccion["carnet"], transaccion["sede"], transaccion["fecha_hora"],
-                ', '.join([f"{m['nombre']} ({m['cantidad']})" for m in transaccion["materiales"]]), transaccion["total"]
-            ))
+        mostrar_transacciones_tabla(self, transacciones)
 
     def filtrar_transacciones(self):
         """
         Filtra las transacciones según las fechas de inicio y fin proporcionadas por el usuario.
         """
+        self.fecha_inicio_var.set("2025-05-27")
+        self.fecha_fin_var.set("2025-05-27")
         fecha_inicio = self.fecha_inicio_var.get()
         fecha_fin = self.fecha_fin_var.get()
+        centro_acopio_id = self.centro_acopio_var.get()
+        self.centro_acopio_var.set("CCA106")
         self.tabla.delete(*self.tabla.get_children())
-        transacciones = obtener_transacciones_centro_acopio(self.centro_acopio_var.get(), fecha_inicio, fecha_fin)
-        for transaccion in transacciones:
-            self.tabla.insert("", "end", values=(
-                transaccion["id_transaccion"], transaccion["carnet"], transaccion["sede"], transaccion["fecha_hora"],
-                ', '.join([f"{m['nombre']} ({m['cantidad']})" for m in transaccion["materiales"]]), transaccion["total"]
-            ))
+        transacciones = obtener_transacciones_centro_acopio(centro_acopio_id, fecha_inicio, fecha_fin)
+        verificar_existencia_transacciones(transacciones)
+        mostrar_transacciones_tabla(self, transacciones)
+

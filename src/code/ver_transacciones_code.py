@@ -11,6 +11,7 @@ Dependencias:
   del centro de acopio desde un archivo.
 """
 from datetime import datetime
+from tkinter import messagebox
 
 from src.code.centro_acopio_code import obtener_transacciones_centro_acopio_con_id
 from src.code.storage.ver_transacciones_storage import obtener_transacciones
@@ -30,7 +31,18 @@ def validar_formato_fecha(fecha):
         datetime.strptime(fecha, "%Y-%m-%d")
         return True
     except ValueError:
+        messagebox.showerror("Fecha inválida", "Revise el formato en que escribió la fecha.")
         return False
+def verificar_existencia_transacciones(transacciones):
+    if not transacciones:
+        messagebox.showinfo("Sin transacciones",
+                            "No hay transacciones para mostrar para el centro de acopio seleccionado.")
+def mostrar_transacciones_tabla(app, transacciones):
+        for transaccion in transacciones:
+            app.tabla.insert("", "end", values=(
+                transaccion["id_transaccion"], transaccion["carnet"], transaccion["sede"], transaccion["fecha_hora"],
+                ', '.join([f"{m['nombre']} ({m['cantidad']})" for m in transaccion["materiales"]]), transaccion["total"]
+            ))
 
 
 def validar_rango_fechas(fecha_inicio, fecha_fin):
@@ -49,8 +61,11 @@ def validar_rango_fechas(fecha_inicio, fecha_fin):
 
     inicio = datetime.strptime(fecha_inicio, "%Y-%m-%d")
     fin = datetime.strptime(fecha_fin, "%Y-%m-%d")
+    if not inicio <= fin:
+        messagebox.showerror("Fecha inválida", "El orden de las fechas es incorrecto.")
+        return False
 
-    return inicio <= fin
+    return True
 
 
 def obtener_transacciones_centro_acopio(id_centro_acopio, fecha_inicio=None, fecha_fin=None):
@@ -67,13 +82,15 @@ def obtener_transacciones_centro_acopio(id_centro_acopio, fecha_inicio=None, fec
     """
 
     transacciones = obtener_transacciones()
-    if fecha_inicio and fecha_fin and validar_rango_fechas(fecha_inicio, fecha_fin):
+    if fecha_inicio and fecha_fin:
+        if not validar_rango_fechas(fecha_inicio, fecha_fin):
+            return
         fecha_inicio = datetime.strptime(fecha_inicio, "%Y-%m-%d")
         fecha_fin = datetime.strptime(fecha_fin, "%Y-%m-%d")
         transacciones = [t for t in transacciones if
                          fecha_inicio <= datetime.strptime(t["fecha_hora"], "%Y-%m-%d %H:%M:%S") <= fecha_fin]
 
-    if 0<len(id_centro_acopio):
+    if 0 < len(id_centro_acopio):
         transacciones_centro_acopio = obtener_transacciones_centro_acopio_con_id(transacciones, id_centro_acopio)
     else:
         transacciones_centro_acopio = transacciones

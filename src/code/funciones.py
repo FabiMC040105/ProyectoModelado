@@ -58,14 +58,3 @@ def obtener_fecha_actual():
 
 
 
-def verificar_carnet_estudiante(carnet):
-    """
-    Verifica la validez de un carné de estudiante.
-
-    Parámetros:
-    - carnet (str): Carné de estudiante a verificar.
-
-    Retorna:
-    - bool: True si el carné es válido, False si no lo es.
-    """
-    return True

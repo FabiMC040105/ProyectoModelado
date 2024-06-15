@@ -15,3 +15,10 @@ def validar_credenciales(carnet, contrasena):
     if usuario and usuario["contrasena"] == contrasena:
         return usuario["rol"]
     return None
+
+def verificar_correo_estudiante(correo):
+    usuarios = cargar_usuarios()
+    usuario = usuarios.get(correo)
+    if usuario and usuario["rol"] == "estudiante":
+        return True
+    return False

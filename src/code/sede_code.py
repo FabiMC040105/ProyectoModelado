@@ -44,7 +44,6 @@ def validar_nombre_sede(nombre_sede):
     for sede in sedes:
         if sede == nombre_sede:
             return True
-    messagebox.showerror("Error de sede", "Nombre de sede incorrecto")
     return False
 
 def validar_campos_form_sede(nombre, ubicacion, estado, telefono):

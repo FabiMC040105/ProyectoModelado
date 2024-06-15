@@ -84,6 +84,22 @@
                 }
             ],
             "total": 492.0
+        },
+        {
+            "id_transaccion": "T-685QRTFAMJ92",
+            "carnet": "estudiante@tec.ac.cr",
+            "id_funcionario": "centro@tec.ac.cr",
+            "id_centro_de_acopio": "CCA15",
+            "sede": "Sprint 2",
+            "fecha_hora": "2024-06-14 14:32:19",
+            "materiales": [
+                {
+                    "nombre": "carton",
+                    "cantidad": "5",
+                    "valor": "123"
+                }
+            ],
+            "total": 615.0
         }
     ]
 }

@@ -10,6 +10,7 @@ from tkinter import ttk
 from src.GUI.material import MaterialReciclajeApp
 from src.GUI.sede import SedeApp
 from src.GUI.centro_acopio import CentroAcopioApp
+from src.GUI.ver_transacciones_admin import VerTransaccionesAdmin
 
 
 class AppPrincipalAdmin:
@@ -44,6 +45,9 @@ class AppPrincipalAdmin:
         self.boton_centro_acopio = ttk.Button(self.panel_lateral, text="Crear Centro de Acopio",
                                               command=self.cargar_centro_acopio)
         self.boton_centro_acopio.pack(pady=5)
+        self.boton_ver_transacciones = ttk.Button(self.panel_lateral, text="Ver Transacciones",
+                                                  command=self.cargar_ver_transacciones)  # Nuevo botón
+        self.boton_ver_transacciones.pack(pady=5)
 
         # Crear el área principal donde se cargarán los widgets
         self.area_principal = ttk.Frame(main_frame)
@@ -69,6 +73,15 @@ class AppPrincipalAdmin:
         """
         self.limpiar_area_principal()
         CentroAcopioApp(self.area_principal)
+
+
+    def cargar_ver_transacciones(self):
+        """
+        Carga la interfaz para ver las transacciones.
+        """
+        self.limpiar_area_principal()
+        VerTransaccionesAdmin(self.area_principal)
+
 
     def limpiar_area_principal(self):
         """

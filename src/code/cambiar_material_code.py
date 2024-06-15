@@ -27,9 +27,11 @@ Módulos relacionados:
 
 
 from tkinter import messagebox
-from src.code.funciones import verificar_carnet_estudiante
+
+from src.code.centro_acopio_code import validar_nombre_centro
 from src.code.material_code import obtener_materiales
 from src.code.sede_code import validar_nombre_sede
+from src.code.storage.validar_credenciales import verificar_correo_estudiante
 
 
 def obtener_nombre_materiales():
@@ -105,13 +107,15 @@ def validar_campos_material(nombre_material, cantidad):
         return False
     else:
         return True
-def validar_campos_transacción(materiales, sede, carnet):
+def validar_campos_transacción(materiales, centro, carnet):
     if len(materiales) < 1:
         messagebox.showerror("Érror", "Debe agregar materiales a la transacción.")
         return False
-    if not validar_nombre_sede(sede):
+    if not validar_nombre_centro(centro):
+        messagebox.showerror("Error de sede", "Nombre de sede incorrecto")
         return False
-    if not verificar_carnet_estudiante(carnet):
+    if not verificar_correo_estudiante(carnet):
+        messagebox.showerror("Error de carnet", "Carnet incorrecto")
         return False
     return True
 

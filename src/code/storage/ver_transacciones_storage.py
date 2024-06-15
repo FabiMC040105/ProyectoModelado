@@ -15,7 +15,6 @@ Dependencias:
 
 import json
 import os
-from datetime import datetime
 from src.code.constantes import JSON_TRANSACCIONES_CENTRO_DE_ACOPIO
 
 
