@@ -30,6 +30,10 @@ def obtener_sedes_activas():
             sedes_activas.append(sede["nombre"])
     return sedes_activas
 
+
+def validar_nombre_sede():
+    return None
+
 def validar_nombre_sede(nombre_sede):
     """
     Valida el nombre de una sede.

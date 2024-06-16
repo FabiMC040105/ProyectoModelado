@@ -11,7 +11,6 @@ from tkinter import ttk, messagebox
 from src.code.cambiar_material_code import obtener_detalles_material, calcular_monto, obtener_nombre_materiales, \
     validar_campos_material, limpiar_formulario_cambiar_material, cacular_monto_total_cambio, validar_campos_transacción
 from src.code.centro_acopio_code import obtener_centros_acopio_activos
-from src.code.sede_code import obtener_sedes_activas
 from src.code.storage.cambiar_material_storage import registrar_transaccion
 
 
@@ -50,10 +49,10 @@ class CambiarMaterialApp:
 
 
         # Añadir la lista desplegable para seleccionar el centro de acopio
-        ttk.Label(form_frame, text="Centro de Acopio:").grid(row=0, column=0, padx=5, pady=5)
+        ttk.Label(form_frame, text="Centro de Acopio:").grid(row=1, column=0, padx=5, pady=5)
         self.centro_acopio_var = tk.StringVar()
         self.centro_acopio_combobox = ttk.Combobox(form_frame, textvariable=self.centro_acopio_var)
-        self.centro_acopio_combobox.grid(row=0, column=1, padx=5, pady=5)
+        self.centro_acopio_combobox.grid(row=1, column=1, padx=5, pady=5)
 
         # Obtener y cargar los centros de acopio activos en el combobox
         self.centros_acopio_activos = obtener_centros_acopio_activos()
@@ -99,7 +98,10 @@ class CambiarMaterialApp:
         Muestra los detalles del material seleccionado en el ComboBox.
         """
         nombre_material = self.material_var.get()
+        print("nombre material: "+ nombre_material)
         detalles = obtener_detalles_material(nombre_material)
+        print("detalles: ")
+        print(detalles)
         self.detalle_var.set(f"Unidad: {detalles['unidad']}, Valor: {detalles['valor']}, Descripción: {detalles['descripcion']}")
 
     def agregar_material(self):
@@ -108,6 +110,8 @@ class CambiarMaterialApp:
         """
         nombre = self.material_var.get()
         cantidad = self.cantidad_var.get()
+        nombre = "carton"
+        cantidad = 15
         if not validar_campos_material(nombre, cantidad):
             return
         material_info = obtener_detalles_material(nombre)
@@ -120,7 +124,9 @@ class CambiarMaterialApp:
         Realiza la transacción de cambio de material.
         """
         carnet = self.carnet_var.get()
+        carnet = "estudiante@tec.ac.cr"
         centro = self.centro_acopio_var.get()
+        centro = "CCA106"
         materiales = []
         lista_de_totales = []
         for item in self.tabla.get_children():
