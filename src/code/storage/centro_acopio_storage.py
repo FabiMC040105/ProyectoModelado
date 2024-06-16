@@ -12,7 +12,6 @@ Dependencias:
 - json: Para cargar y escribir datos en archivos JSON.
 - os: Para manipular rutas de archivos y verificar la existencia de archivos.
 """
-
 import json
 import os
 from src.code.constantes import JSON_CENTRO_DE_ACOPIO

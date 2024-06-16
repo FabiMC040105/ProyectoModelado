@@ -8,7 +8,7 @@ Clases disponibles:
 import tkinter as tk
 from tkinter import ttk
 from src.GUI.cambiar_material import CambiarMaterialApp
-from src.GUI.ver_transacciones import VerTransaccionesCentroAcopio
+from src.GUI.ver_transacciones_centro_acopio import VerTransaccionesCentroAcopio
 
 class AppPrincipalCentroAcopio(tk.Frame):
     """

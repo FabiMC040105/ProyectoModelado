@@ -9,7 +9,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from src.code.constantes import JSON_SEDE, COLUMNAS_TABLA_SEDE, PREFIJO_SEDE
 from src.code.funciones import generar_id_unico
-from src.code.sede_code import obtener_sedes,  validar_campos_form_sede, limpiar_formulario_sede
+from src.code.sede_code import obtener_sedes
 from src.code.storage.sede_storage import agregar_sede_archivo
 
 
@@ -95,7 +95,7 @@ class SedeApp:
         ubicacion = self.ubicacion_var.get()
         estado = self.estado_var.get()
         telefono = self.telefono_var.get()
-        if not validar_campos_form_sede(nombre, ubicacion, estado, telefono):
+        if not self.validarcampos(nombre, ubicacion, estado, telefono):
             return
         # Generar ID único para la sede
         sede_id = generar_id_unico(PREFIJO_SEDE)
@@ -107,11 +107,47 @@ class SedeApp:
         messagebox.showinfo("Éxito", "Sede creada exitosamente.")
 
         # Limpiar los campos de entrada
-        limpiar_formulario_sede(self)
-
+        self.nombre_var.set("")
+        self.ubicacion_var.set("")
+        self.estado_var.set("")
+        self.telefono_var.set("")
 
         # Recargar la tabla de sedes
         self.tabla.delete(*self.tabla.get_children())
         self.cargar_sedes()
 
+    def validarcampos(self, nombre, ubicacion, estado, telefono):
+        """
+        Valida los campos del formulario.
 
+        Parámetros:
+        - nombre: El nombre de la sede.
+        - ubicacion: La ubicación de la sede.
+        - estado: El estado de la sede.
+        - telefono: El número de teléfono de la sede.
+
+        Retorna:
+        - bool: True si los campos son válidos, False en caso contrario.
+        """
+        sedes = obtener_sedes()
+        nombrevalido = True
+        for sede in sedes:
+            if sede["nombre"].upper() == nombre.upper():
+                nombrevalido = False
+        if not nombrevalido:
+            messagebox.showerror("Error", "Ya existe un sede con ese nombre")
+            return False
+        if not nombre or not ubicacion or not estado or not telefono:
+            messagebox.showerror("Error", "Por favor complete todos los campos.")
+            return False
+
+        try:
+            telefono = int(telefono)
+        except ValueError:
+            messagebox.showerror("Error", "El número de teléfono debe ser numérico.")
+            return False
+
+        if len(str(telefono)) != 8:
+            messagebox.showerror("Error", "El número de teléfono debe tener 8 dígitos.")
+            return False
+        return True

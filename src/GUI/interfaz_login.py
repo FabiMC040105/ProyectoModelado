@@ -24,8 +24,12 @@ class InterfazLogin(tk.Toplevel):
         self.parent = parent
 
     def iniciar_sesion(self):
+        """
         carnet = self.entry_carnet.get()
         contrasena = self.entry_contrasena.get()
+        """
+        carnet = "admin@tec.ac.cr"
+        contrasena = "1234abcd"
 
         rol = validar_credenciales(carnet, contrasena)
         if rol == "administrador":

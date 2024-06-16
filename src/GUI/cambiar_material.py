@@ -6,10 +6,11 @@ Clase disponible:
 """
 
 import tkinter as tk
-from tkinter import ttk
-from src.code.cambiar_material_code import *
+from tkinter import ttk, messagebox
 
-from src.code.cambiar_material_code import  obtener_detalles_material, calcular_monto
+from src.code.cambiar_material_code import obtener_detalles_material, calcular_monto, obtener_nombre_materiales, \
+    validar_campos_material, limpiar_formulario_cambiar_material, cacular_monto_total_cambio, validar_campos_transacción
+from src.code.centro_acopio_code import obtener_centros_acopio_activos
 from src.code.sede_code import obtener_sedes_activas
 from src.code.storage.cambiar_material_storage import registrar_transaccion
 
@@ -46,11 +47,17 @@ class CambiarMaterialApp:
         self.carnet_entry = ttk.Entry(form_frame, textvariable=self.carnet_var)
         self.carnet_entry.grid(row=0, column=1, padx=5, pady=5)
 
-        # ComboBox para seleccionar la sede
-        ttk.Label(form_frame, text="Sede:").grid(row=1, column=0, sticky="w")
-        sedes = obtener_sedes_activas()
-        self.sede_combobox = ttk.Combobox(form_frame, textvariable=self.sede_var, values=sedes)
-        self.sede_combobox.grid(row=1, column=1, padx=5, pady=5)
+
+
+        # Añadir la lista desplegable para seleccionar el centro de acopio
+        ttk.Label(form_frame, text="Centro de Acopio:").grid(row=0, column=0, padx=5, pady=5)
+        self.centro_acopio_var = tk.StringVar()
+        self.centro_acopio_combobox = ttk.Combobox(form_frame, textvariable=self.centro_acopio_var)
+        self.centro_acopio_combobox.grid(row=0, column=1, padx=5, pady=5)
+
+        # Obtener y cargar los centros de acopio activos en el combobox
+        self.centros_acopio_activos = obtener_centros_acopio_activos()
+        self.centro_acopio_combobox['values'] = [centro['id'] for centro in self.centros_acopio_activos]
 
         # ComboBox para seleccionar el material
         ttk.Label(form_frame, text="Material:").grid(row=2, column=0, sticky="w")
@@ -113,7 +120,7 @@ class CambiarMaterialApp:
         Realiza la transacción de cambio de material.
         """
         carnet = self.carnet_var.get()
-        sede = self.sede_var.get()
+        centro = self.centro_acopio_var.get()
         materiales = []
         lista_de_totales = []
         for item in self.tabla.get_children():
@@ -125,9 +132,9 @@ class CambiarMaterialApp:
             })
             lista_de_totales.append(values[4])
         total = cacular_monto_total_cambio(lista_de_totales)
-        if not validar_campos_transacción(materiales, sede, carnet):
+        if not validar_campos_transacción(materiales, centro, carnet):
             return
-        if registrar_transaccion(carnet, self.id_funcionario, sede, materiales, total):
+        if registrar_transaccion(carnet, self.id_funcionario, centro, materiales, total):
             messagebox.showinfo("Éxito", "Transacción realizada exitosamente.")
             self.tabla.delete(*self.tabla.get_children())
         else:

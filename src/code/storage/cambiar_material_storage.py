@@ -1,13 +1,28 @@
+"""
+Este módulo proporciona funciones para registrar transacciones en el centro de acopio.
+
+Funciones disponibles:
+- registrar_transaccion: Registra una nueva transacción en el archivo JSON.
+
+Dependencias:
+- json: Para cargar y escribir datos en archivos JSON.
+- os: Para manipular rutas de archivos y verificar la existencia de archivos.
+- datetime.datetime: Para obtener la fecha y hora actual.
+- src.code.constantes.PREFIJO_TRANSACCION: Prefijo para generar IDs únicos de transacciones.
+- src.code.constantes.JSON_TRANSACCIONES_CENTRO_DE_ACOPIO: Ruta del archivo JSON que contiene las transacciones del centro de acopio.
+- src.code.funciones.generar_id_unico: Función para generar IDs únicos.
+- src.code.storage.funcionarios_storage.obtener_funcionarios: Función para obtener la información de un funcionario.
+"""
 import json
 import os
 from datetime import datetime
 
+from src.code.centro_acopio_code import obtener_sede_de_centros_acopio
 from src.code.constantes import PREFIJO_TRANSACCION, JSON_TRANSACCIONES_CENTRO_DE_ACOPIO
 from src.code.funciones import generar_id_unico
 from src.code.storage.funcionarios_storage import obtener_funcionarios
 
-
-def registrar_transaccion(carnet, id_funcionario, sede, materiales, total):
+def registrar_transaccion(carnet, id_funcionario, centro, materiales, total):
     """
     Registra una nueva transacción en el archivo JSON.
 
@@ -36,8 +51,8 @@ def registrar_transaccion(carnet, id_funcionario, sede, materiales, total):
             "id_transaccion": generar_id_unico(PREFIJO_TRANSACCION),
             "carnet": carnet,
             "id_funcionario": id_funcionario,
-            "id_centro_de_acopio": funcionario["idcentro"],
-            "sede": sede,
+            "id_centro_de_acopio": centro,
+            "sede": obtener_sede_de_centros_acopio(centro),
             "fecha_hora": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "materiales": materiales,
             "total": total

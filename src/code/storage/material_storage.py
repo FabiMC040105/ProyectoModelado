@@ -1,9 +1,22 @@
+"""
+Este módulo proporciona funciones para gestionar materiales mediante archivos JSON.
+
+Funciones disponibles:
+- agregar_material_archivo: Agrega un nuevo material al archivo JSON especificado.
+- obtener_materiales: Obtiene la lista de materiales del archivo JSON especificado.
+
+Constantes utilizadas:
+- JSON_MATERIAL: Ruta del archivo JSON que contiene la información de los materiales.
+
+Dependencias:
+- json: Para cargar y escribir datos en archivos JSON.
+- os: Para manipular rutas de archivos y verificar la existencia de archivos.
+- src.code.funciones.obtener_fecha_actual: Función para obtener la fecha actual.
+"""
 import json
 import os
-
 from src.code.constantes import JSON_MATERIAL
 from src.code.funciones import obtener_fecha_actual
-
 
 def agregar_material_archivo(material_id, nombre, unidad, valor, descripcion):
     """
@@ -41,8 +54,6 @@ def agregar_material_archivo(material_id, nombre, unidad, valor, descripcion):
     with open(archivo, "w") as file:
         json.dump(data, file, indent=4)
 
-
-
 def obtener_materiales():
     """
     Obtiene la lista de materiales del archivo JSON especificado.
@@ -57,3 +68,4 @@ def obtener_materiales():
             return data.get("Materiales", [])
     else:
         return []
+

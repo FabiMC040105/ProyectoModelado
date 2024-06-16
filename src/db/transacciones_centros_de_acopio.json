@@ -6,7 +6,7 @@
             "id_funcionario": "F-1234",
             "id_centro_de_acopio": "CCA106",
             "sede": "Pacifico",
-            "fecha_hora": "2024-05-27 11:52:25",
+            "fecha_hora": "2024-05-25 11:52:25",
             "materiales": [
                 {
                     "nombre": "carton",
@@ -22,7 +22,7 @@
             "id_funcionario": "F-1234",
             "id_centro_de_acopio": "CCA106",
             "sede": "\u00d1ema",
-            "fecha_hora": "2024-05-27 11:56:43",
+            "fecha_hora": "2024-05-26 11:56:43",
             "materiales": [
                 {
                     "nombre": "Lata de atun",
@@ -70,173 +70,36 @@
             "total": 1353.0
         },
         {
-            "id_transaccion": "T-R62P2R7Z1PUN",
-            "carnet": "123",
-            "id_funcionario": "F-4444",
-            "id_centro_de_acopio": "CA115",
-            "sede": "Central",
-            "fecha_hora": "2024-05-27 14:45:17",
-            "materiales": [
-                {
-                    "nombre": "Lata de atun",
-                    "cantidad": "34",
-                    "valor": "135"
-                }
-            ],
-            "total": 4590.0
-        },
-        {
-            "id_transaccion": "T-09GVSS703DRH",
-            "carnet": "12345",
-            "id_funcionario": "F-4444",
-            "id_centro_de_acopio": "CA115",
-            "sede": "Sancarle\u00f1a",
-            "fecha_hora": "2024-05-27 22:37:48",
-            "materiales": [
-                {
-                    "nombre": "papel ",
-                    "cantidad": "12",
-                    "valor": "123"
-                },
-                {
-                    "nombre": "carton",
-                    "cantidad": "9",
-                    "valor": "123"
-                }
-            ],
-            "total": 2583.0
-        },
-        {
-            "id_transaccion": "T-IGVKP2U9GX0N",
+            "id_transaccion": "T-ACFT07D3FPD4",
             "carnet": "",
             "id_funcionario": "F-4444",
             "id_centro_de_acopio": "CA115",
-            "sede": "Central",
-            "fecha_hora": "2024-05-28 20:13:59",
-            "materiales": [
-                {
-                    "nombre": "carton",
-                    "cantidad": "1234",
-                    "valor": "123"
-                }
-            ],
-            "total": 151782.0
-        },
-        {
-            "id_transaccion": "T-C4SVENWRVEPL",
-            "carnet": "12345",
-            "id_funcionario": "F-4444",
-            "id_centro_de_acopio": "CA115",
-            "sede": "Central",
-            "fecha_hora": "2024-05-28 20:15:05",
-            "materiales": [
-                {
-                    "nombre": "papel ",
-                    "cantidad": "12",
-                    "valor": "123"
-                }
-            ],
-            "total": 1476.0
-        },
-        {
-            "id_transaccion": "T-YGKWF156KBD3",
-            "carnet": "112345",
-            "id_funcionario": "F-4444",
-            "id_centro_de_acopio": "CE1105",
-            "sede": "Pacifico",
-            "fecha_hora": "2024-06-02 17:28:45",
-            "materiales": [
-                {
-                    "nombre": "carton",
-                    "cantidad": "10",
-                    "valor": "123"
-                },
-                {
-                    "nombre": "Vidrio",
-                    "cantidad": "1",
-                    "valor": "500"
-                }
-            ],
-            "total": 1730.0
-        },
-        {
-            "id_transaccion": "T-AMY1FTNKK6PN",
-            "carnet": "112345",
-            "id_funcionario": "F-4444",
-            "id_centro_de_acopio": "CE1105",
-            "sede": "Pacifico",
-            "fecha_hora": "2024-06-02 17:32:33",
-            "materiales": [
-                {
-                    "nombre": "Vidrio",
-                    "cantidad": "1",
-                    "valor": "500"
-                },
-                {
-                    "nombre": "carton",
-                    "cantidad": "1",
-                    "valor": "123"
-                },
-                {
-                    "nombre": "Vidrio",
-                    "cantidad": "10",
-                    "valor": "500"
-                }
-            ],
-            "total": 5623.0
-        },
-        {
-            "id_transaccion": "T-V3N4HED7H70K",
-            "carnet": "112345",
-            "id_funcionario": "F-4444",
-            "id_centro_de_acopio": "CE1105",
-            "sede": "Pacifico",
-            "fecha_hora": "2024-06-02 17:34:33",
-            "materiales": [
-                {
-                    "nombre": "Vidrio",
-                    "cantidad": "0.5",
-                    "valor": "500"
-                },
-                {
-                    "nombre": "Vidrio",
-                    "cantidad": "1",
-                    "valor": "500"
-                }
-            ],
-            "total": 750.0
-        },
-        {
-            "id_transaccion": "T-F6X20NTAD4CL",
-            "carnet": "123456",
-            "id_funcionario": "F-4444",
-            "id_centro_de_acopio": "CE1105",
-            "sede": "Central",
-            "fecha_hora": "2024-06-04 23:49:44",
-            "materiales": [
-                {
-                    "nombre": "papel ",
-                    "cantidad": "1234",
-                    "valor": "123"
-                }
-            ],
-            "total": 151782.0
-        },
-        {
-            "id_transaccion": "T-F1RZTKSUP7NV",
-            "carnet": "1234",
-            "id_funcionario": "F-4444",
-            "id_centro_de_acopio": "CE1105",
             "sede": "\u00d1ema",
-            "fecha_hora": "2024-06-08 19:27:51",
+            "fecha_hora": "2024-06-12 16:30:10",
             "materiales": [
                 {
-                    "nombre": "Lata de atun",
-                    "cantidad": "33",
-                    "valor": "135"
+                    "nombre": "carton",
+                    "cantidad": "4",
+                    "valor": "123"
                 }
             ],
-            "total": 4455.0
+            "total": 492.0
+        },
+        {
+            "id_transaccion": "T-685QRTFAMJ92",
+            "carnet": "estudiante@tec.ac.cr",
+            "id_funcionario": "centro@tec.ac.cr",
+            "id_centro_de_acopio": "CCA15",
+            "sede": "Sprint 2",
+            "fecha_hora": "2024-06-14 14:32:19",
+            "materiales": [
+                {
+                    "nombre": "carton",
+                    "cantidad": "5",
+                    "valor": "123"
+                }
+            ],
+            "total": 615.0
         }
     ]
 }
