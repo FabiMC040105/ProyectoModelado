@@ -84,11 +84,16 @@ class MaterialReciclajeApp:
         """
         Crea un nuevo material.
         """
+
         nombre = self.nombre_var.get()
         unidad = self.unidad_var.get()
         valor = self.valor_var.get()
         descripcion = self.descripcion_var.get()
-
+        """
+        print("Nombre: "+nombre)
+        print("Unidad: " + unidad)
+        print("Valor: " + valor)
+        """
         if not validar_campos_material(nombre, unidad, valor, descripcion):
             return
 
